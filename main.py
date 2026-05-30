@@ -6,20 +6,19 @@ Software Engineer - Francheska Allan
 Software Engineer - Archie Gujilde
 Software Engineer - Brian Josh Las Marias"""
 
-# --- Standard library and third-party imports ---
 from flask import Flask, render_template, request, redirect, url_for, session, Response
-from flask_sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy #database
 from abc import ABC, abstractmethod
-from datetime import datetime
+from datetime import datetime 
 import os
 
-# --- Flask application initialization ---
+
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-# Initialize SQLAlchemy ORM
+# Initialize SQLAlchemy
 db = SQLAlchemy(app)
 
 class PriorityLevel:
@@ -37,10 +36,7 @@ class ReportStatus:
     IN_PROGRESS = "In Progress"
     RESOLVED = "Resolved"
 
-
-# =============================================================
 # SQLALCHEMY REPORT MODEL & ENCAPSULATION METHODS
-# =============================================================
 
 class Report(db.Model):
     """SQLAlchemy model representing a submitted community concern report."""
