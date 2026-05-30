@@ -1,0 +1,63 @@
+<!-- admin_feedback.html — Citizen ratings feedback and reviews monitor cards grid -->
+{% extends "admin_base.html" %}
+
+{% block title %}Feedback Monitor{% endblock %}
+
+{% block admin_content %}
+    
+    <!-- Page Headings -->
+    <h2 class="admin-page-title">Feedback Monitor</h2>
+    <p class="admin-page-subtitle">Track citizen satisfaction levels, department response ratings, and resolved concern reviews.</p>
+
+    <!-- Grid of Modular Card Items -->
+    {% if feedback_list %}
+        <section class="feedback-cards-grid">
+            
+            {% for item in feedback_list %}
+            <!-- Indiv Card block -->
+            <article class="feedback-card-item">
+                
+                <!-- Card Header: citizen details metadata -->
+                <div class="feedback-card-header">
+                    <div><strong>Citizen Name:</strong> {{ item.citizen_name }}</div>
+                    <div style="margin-top:2px;"><strong>Concern Category:</strong> {{ item.concern_category }}</div>
+                    {% if item.department_assigned %}
+                    <div style="margin-top:2px;"><strong>Department Assigned:</strong> {{ item.department_assigned }}</div>
+                    {% endif %}
+                </div>
+
+                <!-- Star Rating Badge -->
+                <div style="margin-bottom:14px; display:flex; align-items:center; gap:8px;">
+                    <span style="font-size:0.8rem; font-weight:700; color:#555;">Rating:</span>
+                    <span class="feedback-star-badge">
+                        <!-- Dynamic stars count display string -->
+                        {% for i in range(item.rating) %}★{% endfor %}{% for i in range(5 - item.rating) %}☆{% endfor %}
+                        ({{ item.rating }}/5)
+                    </span>
+                </div>
+
+                <!-- Written comment thoughts log -->
+                {% if item.comment %}
+                <div class="feedback-comment">
+                    "{{ item.comment }}"
+                </div>
+                {% endif %}
+
+                <!-- Timestamp footer line -->
+                <div style="text-align:right; font-size:0.75rem; font-weight:700; color:#666; border-top:1px dashed #C8C8C8; padding-top:8px;">
+                    Submitted: {{ item.date_submitted }}
+                </div>
+
+            </article>
+            {% endfor %}
+
+        </section>
+    {% else %}
+        <!-- Empty feedback queue state -->
+        <div class="form-card" style="padding: 40px; text-align: center;">
+            <h3 style="font-size:1.1rem; font-weight:800; color:#000; margin:0 0 8px 0;">No citizen reviews found</h3>
+            <p style="font-size:0.9rem; color:#666; margin:0;">Reviews will populate once residents rate their resolved concern tickets.</p>
+        </div>
+    {% endif %}
+
+{% endblock %}

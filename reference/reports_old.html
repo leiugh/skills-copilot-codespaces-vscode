@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Reports</title>
+</head>
+
+<body>
+
+<h1>Submitted Reports</h1>
+
+{% for report in reports %}
+
+<div>
+
+    <h3>Report #{{ report.report_id }}</h3>
+
+    <p>Name: {{ report.name }}</p>
+
+    <p>Location: {{ report.location }}</p>
+
+    <p>Concern: {{ report.concern }}</p>
+
+    <p>Severity: {{ report.severity }}</p>
+
+    <p>Status: {{ report.status }}</p>
+
+    <hr>
+
+</div>
+
+{% endfor %}
+
+</body>
+</html>

@@ -1,0 +1,1760 @@
+
+/* Import Google Font "Inter" */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+/* --- CSS Reset & Base Styles --- */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    color: #000;
+    background-color: #fafafa;
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+ul {
+    list-style: none;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* =============================================================
+   HEADER — Light gray banner with black text and logo
+   ============================================================= */
+header {
+    background-color: #D9D9D9; /* Light gray background */
+    color: #000; /* Black text */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 30px;
+    height: 60px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+    border-bottom: 1px solid #c0c0c0;
+}
+
+/* Logo + "CITY OF MANILA" text group */
+.logo-section {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-section img {
+    height: 40px;
+    width: 40px;
+    object-fit: contain;
+    border-radius: 50%;
+}
+
+.logo-section h1 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: #000;
+}
+
+/* Navigation links */
+nav {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+nav a {
+    color: #444; /* Dark gray font */
+    font-size: 0.85rem;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 4px;
+    transition: color 0.25s ease, background-color 0.25s ease;
+}
+
+nav a:hover {
+    color: #000;
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* Added: Pill shape with dark grey background for the active navigation link */
+nav a.active {
+    color: #fff !important; /* White text for contrast */
+    background-color: #555 !important; /* Dark grey background */
+    border-radius: 20px !important; /* Pill shape rounding */
+    font-weight: 600; /* Bold active state */
+}
+
+/* =============================================================
+   HERO SECTION — Drone shot background with monochromatic boxes
+   ============================================================= */
+.hero {
+    position: relative;
+    min-height: 420px;
+    background: url('/static/images/manila-bg-drone-shot.jpg') center/cover no-repeat;
+    background-color: #d9d9d9;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 30px 40px;
+}
+
+/* Dark overlay on top of the background image */
+.hero .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+/* Hero text content */
+.hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    color: #fff;
+    max-width: 700px;
+    margin-bottom: 40px;
+}
+
+.hero-content h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    line-height: 1.4;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+/* Monochromatic CTA button (Solid Black, turns dark gray on hover) */
+.hero-content .btn-cta {
+    display: inline-block;
+    margin-top: 24px;
+    padding: 12px 32px;
+    background-color: #000;
+    color: #fff;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.hero-content .btn-cta:hover {
+    background-color: #222;
+    transform: translateY(-2px);
+}
+
+/* Monochromatic Statistics / Announcements Info Boxes */
+.info-container {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    gap: 24px;
+    width: 100%;
+    max-width: 900px;
+}
+
+.info-box {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.98);
+    color: #000;
+    border-radius: 6px;
+    padding: 20px 24px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e0e0e0;
+}
+
+.info-box h3 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #000;
+    border-bottom: 2px solid #000; /* Monochromatic black accent border */
+    padding-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.info-box ul {
+    padding-left: 0;
+}
+
+.info-box ul li {
+    font-size: 0.88rem;
+    padding: 4px 0;
+    color: #333;
+    position: relative;
+    padding-left: 16px;
+}
+
+.info-box ul li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: #000; /* Black bullet points */
+    font-weight: bold;
+}
+
+/* =============================================================
+   FOOTER — Light gray footer with dark text
+   ============================================================= */
+footer {
+    background-color: #D9D9D9; /* Light gray background */
+    color: #333; /* Dark gray text */
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 24px 40px;
+    font-size: 0.82rem;
+    margin-top: auto;
+    border-top: 1px solid #c0c0c0;
+}
+
+.footer-left,
+.footer-right {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+footer strong {
+    color: #000; /* Solid black bold footer text */
+}
+
+/* =============================================================
+   PAGE CONTAINER — Wraps the main content area on inner pages
+   ============================================================= */
+.page-container {
+    flex: 1;
+    max-width: 960px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 40px 24px;
+}
+
+/* Page titles (h2) */
+.page-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #000;
+    margin-bottom: 8px;
+}
+
+/* Subtitle below page title */
+.page-subtitle {
+    font-size: 0.92rem;
+    color: #555;
+    margin-bottom: 28px;
+}
+
+/* =============================================================
+   FORM STYLES — Shared styles for resident & admin forms
+   ============================================================= */
+.form-card {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 32px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+/* Two-column form grid layout */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px 28px;
+}
+
+/* Full-width fields spanning both columns */
+.form-grid .full-width {
+    grid-column: 1 / -1;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+/* Required field asterisk indicator */
+.form-group label .required {
+    color: #000; /* Clean black asterisk */
+    margin-left: 2px;
+}
+
+.form-group input[type="text"],
+.form-group input[type="password"],
+.form-group input[type="email"],
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 0.88rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fafafa;
+    color: #000;
+    font-family: inherit;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #000; /* Solid black border on focus */
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.08);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+/* File upload input styling */
+.form-group input[type="file"] {
+    font-size: 0.85rem;
+    padding: 8px;
+    border: 1px dashed #bbb;
+    border-radius: 4px;
+    background-color: #fafafa;
+    cursor: pointer;
+}
+
+.form-group input[type="file"]:hover {
+    border-color: #000;
+}
+
+/* Severity radio button group */
+.severity-options {
+    display: flex;
+    gap: 20px;
+    padding-top: 4px;
+}
+
+.severity-options label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 500;
+    font-size: 0.88rem;
+    cursor: pointer;
+    text-transform: none;
+    color: #333;
+}
+
+.severity-options input[type="radio"] {
+    accent-color: #000; /* Monochromatic black active state */
+    width: 16px;
+    height: 16px;
+}
+
+/* Solid Black Submit button */
+.btn-submit {
+    display: inline-block;
+    margin-top: 24px;
+    padding: 12px 36px;
+    background-color: #000;
+    color: #fff;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-submit:hover {
+    background-color: #222;
+    transform: translateY(-1px);
+}
+
+/* =============================================================
+   ADMIN LOGIN — Centered card layout for admin page
+   ============================================================= */
+.admin-login-card {
+    max-width: 480px;
+    margin: 0 auto;
+}
+
+/* Monochromatic alert boxes */
+.alert-error {
+    background-color: #f5f5f5;
+    border: 1px solid #333;
+    color: #000;
+    padding: 12px 16px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    font-size: 0.88rem;
+    font-weight: 500;
+}
+
+.alert-success {
+    background-color: #fafafa;
+    border: 1px solid #000;
+    color: #000;
+    padding: 12px 16px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    font-size: 0.88rem;
+    font-weight: 500;
+}
+
+/* =============================================================
+   REPORTS TABLE — Monochromatic tabular layout
+   ============================================================= */
+.reports-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    border: 1px solid #e0e0e0;
+}
+
+.reports-table thead {
+    background-color: #000; /* Solid Black table head */
+    color: #fff;
+}
+
+.reports-table th {
+    padding: 14px 16px;
+    text-align: left;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.reports-table td {
+    padding: 12px 16px;
+    font-size: 0.88rem;
+    border-bottom: 1px solid #eee;
+    color: #222;
+    vertical-align: top;
+}
+
+.reports-table tbody tr:hover {
+    background-color: #f7f7f7;
+}
+
+.reports-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Monochromatic status badges */
+.badge {
+    display: inline-block;
+    padding: 4px 12px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border: 1px solid #000;
+}
+
+.badge-pending {
+    background-color: #fff;
+    color: #333;
+    border-color: #ccc;
+}
+
+.badge-submitted {
+    background-color: #f0f0f0;
+    color: #000;
+    border-color: #999;
+}
+
+.badge-reviewed {
+    background-color: #e0e0e0;
+    color: #000;
+    border-color: #777;
+}
+
+.badge-assigned {
+    background-color: #888;
+    color: #fff;
+    border-color: #888;
+}
+
+.badge-in-progress {
+    background-color: #333;
+    color: #fff;
+    border-color: #333;
+}
+
+.badge-resolved {
+    background-color: #000;
+    color: #fff;
+    border-color: #000;
+}
+
+.badge-rejected {
+    background-color: #fff;
+    color: #000;
+    border-color: #000;
+    border-style: dashed;
+}
+
+/* Report image thumbnail in table */
+.report-thumb {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+/* Empty state when no reports exist */
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: #666;
+}
+
+.empty-state h3 {
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+    color: #000;
+}
+
+.empty-state p {
+    font-size: 0.88rem;
+}
+
+/* =============================================================
+   SUCCESS PAGE — Monochromatic Confirmation Card
+   ============================================================= */
+.success-card {
+    text-align: center;
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 48px 32px;
+    max-width: 560px;
+    margin: 0 auto;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.success-card .checkmark {
+    font-size: 3rem;
+    margin-bottom: 16px;
+}
+
+.success-card h2 {
+    font-size: 1.4rem;
+    color: #000;
+    margin-bottom: 12px;
+    font-weight: 700;
+}
+
+.success-card p {
+    font-size: 0.9rem;
+    color: #333;
+    margin-bottom: 6px;
+}
+
+.success-card .btn-group {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 28px;
+}
+
+.btn-secondary {
+    display: inline-block;
+    padding: 10px 28px;
+    background-color: #f0f0f0;
+    color: #000;
+    font-size: 0.88rem;
+    font-weight: 600;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background-color: #e0e0e0;
+}
+
+.btn-primary {
+    display: inline-block;
+    padding: 10px 28px;
+    background-color: #000;
+    color: #fff;
+    font-size: 0.88rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #222;
+}
+
+/* =============================================================
+   ADMIN STATUS UPDATE FORM (inline in reports table)
+   ============================================================= */
+.status-form {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.status-form select {
+    padding: 4px 8px;
+    font-size: 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    font-family: inherit;
+}
+
+.status-form button {
+    padding: 4px 10px;
+    font-size: 0.78rem;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.status-form button:hover {
+    background-color: #222;
+}
+
+/* =============================================================
+   RESPONSIVE — Adjustments for smaller viewports
+   ============================================================= */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        height: auto;
+        padding: 12px 20px;
+        gap: 8px;
+    }
+
+    nav {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .hero {
+        min-height: 320px;
+        padding: 40px 20px 30px;
+    }
+
+    .hero-content h2 {
+        font-size: 1.3rem;
+    }
+
+    .info-container {
+        flex-direction: column;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    footer {
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+    }
+
+    .success-card .btn-group {
+        flex-direction: column;
+    }
+}
+
+/* =============================================================
+   ADDED CUSTOM MCCRRS CORE & COMPONENT STYLES
+   All styles added below are customized for the 4 wireframe designs
+   ============================================================= */
+
+/* Added: Watermark background class to display a faint, centered City of Manila seal */
+.watermark-bg {
+    background-image: linear-gradient(rgba(255, 255, 255, 0.90), rgba(255, 255, 255, 0.90)), url('/static/images/manila-logo.png'); /* Faint City of Manila seal */
+    background-repeat: no-repeat; /* Do not repeat */
+    background-position: center 30%; /* Centered and slightly higher vertically */
+    background-size: 550px; /* Visually distinct but faint scaling */
+}
+
+/* Added: Column layouts for the About/Home screen */
+.about-columns {
+    display: grid; /* Grid layout for columns */
+    grid-template-columns: repeat(3, 1fr); /* Three equal width columns */
+    gap: 24px; /* Space between columns */
+    margin-top: 30px; /* Space from description */
+}
+
+.about-column-card {
+    background: rgba(255, 255, 255, 0.95); /* Semi-transparent white container */
+    border: 1px solid #ccc; /* Subtle card border */
+    border-radius: 6px; /* Rounded corners */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Card shadow */
+    overflow: hidden; /* Mask inner card corners */
+    display: flex; /* Flex layout */
+    flex-direction: column; /* Vertical alignment */
+}
+
+.about-column-header {
+    background-color: #e6e6e6; /* Light gray header bar background */
+    color: #000; /* Black text */
+    padding: 12px 20px; /* Header padding */
+    font-weight: 700; /* Bold title */
+    font-size: 0.95rem; /* Text size */
+    text-align: center; /* Centered title text */
+    border-bottom: 1px solid #ccc; /* Boundary separator */
+    text-transform: uppercase; /* Uppercase matching wireframe */
+    letter-spacing: 0.5px; /* Spacing */
+}
+
+.about-column-body {
+    padding: 20px; /* Inside padding */
+    font-size: 0.88rem; /* Body font size */
+    color: #222; /* Near black text color */
+    line-height: 1.6; /* Spacing */
+    flex: 1; /* Stretch body fully */
+}
+
+.about-column-body ul, .about-column-body ol {
+    padding-left: 20px; /* Indent lists */
+}
+
+.about-column-body ul li {
+    list-style-type: disc; /* Bullet lists */
+    margin-bottom: 8px; /* Margin */
+}
+
+.about-column-body ol li {
+    list-style-type: decimal; /* Decimal numbering */
+    margin-bottom: 8px; /* Margin */
+}
+
+/* Added: Report page layout containing the form and the priority information */
+.report-layout {
+    display: grid; /* Grid layout for report page */
+    grid-template-columns: 1.2fr 1fr; /* Form side slightly wider than priority side */
+    gap: 40px; /* Large space between columns */
+    align-items: start; /* Top-aligned columns */
+}
+
+/* Added: Vertical divider line between the two columns on the Report Form screen */
+.vertical-divider {
+    border-right: 2px solid #ccc; /* Thick vertical gray line */
+    padding-right: 40px; /* Space inside the divider */
+}
+
+/* Added: Green submit button for the resident report form */
+.btn-submit-green {
+    background-color: #008000 !important; /* Rich green color */
+    color: #fff !important; /* White text for readability */
+    padding: 12px 32px; /* Large button padding */
+    border-radius: 4px; /* Rounded button corners */
+    font-weight: 700; /* Bold submit text */
+    border: none; /* No border */
+    cursor: pointer; /* Click pointer */
+    transition: background-color 0.25s ease; /* Hover transition */
+    text-transform: lowercase; /* Lowercase 'submit' matching wireframe */
+}
+
+.btn-submit-green:hover {
+    background-color: #006400 !important; /* Darker green on hover */
+}
+
+/* Added: Form field wrappers with pill-shaped border-radius matching the gray rounded input bars of the wireframe */
+.pill-input {
+    border-radius: 20px !important; /* Fully rounded inputs */
+    border: 1px solid #ccc !important; /* Clean gray border */
+    background-color: #E0E0E0 !important; /* Gray background for input bars matching the wireframe */
+    padding: 12px 20px !important; /* Inside spacing */
+    font-size: 0.9rem !important; /* Font size */
+    font-family: inherit; /* Inherit font family */
+    color: #000 !important; /* Black text */
+    width: 100%; /* Take full width */
+}
+
+.pill-input:focus {
+    outline: none !important; /* Clear outline */
+    border-color: #555 !important; /* Dark gray border on focus */
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05) !important; /* Shadow ring */
+}
+
+/* Added: Priority level category styling for the right side of the Report Form */
+.priority-container h2 {
+    font-size: 1.8rem; /* Font size matching wireframe style */
+    font-weight: 800; /* Bold title */
+    text-align: center; /* Center aligned */
+    margin-bottom: 24px; /* Space below */
+    color: #000; /* Black color */
+}
+
+.priority-section {
+    margin-bottom: 24px; /* Separation between Critical, Major, and Minor categories */
+}
+
+.priority-header {
+    display: flex; /* Flex layout */
+    align-items: center; /* Centered vertically */
+    gap: 12px; /* Space between title and bar */
+    font-weight: 700; /* Bold category title */
+    font-size: 1.1rem; /* Title size */
+    margin-bottom: 12px; /* Space below header */
+}
+
+/* Added: Priority level indicator bars matching the red, yellow, green color bars from the wireframe */
+.priority-bar-critical {
+    background-color: red; /* Solid red bar */
+    height: 12px; /* Bar thickness */
+    width: 100px; /* Bar width */
+    border-radius: 2px; /* Sharp corners with small round */
+}
+
+.priority-bar-major {
+    background-color: #FFCC00; /* Solid bright yellow bar */
+    height: 12px; /* Bar thickness */
+    width: 100px; /* Bar width */
+    border-radius: 2px; /* Small round */
+}
+
+.priority-bar-minor {
+    background-color: #00CC00; /* Solid bright green bar */
+    height: 12px; /* Bar thickness */
+    width: 100px; /* Bar width */
+    border-radius: 2px; /* Small round */
+}
+
+/* Added: Two-column grid inside each priority level list to separate lists of examples beautifully */
+.priority-list-grid {
+    display: grid; /* Grid layout for examples list */
+    grid-template-columns: 1fr 1fr; /* Split into two columns */
+    gap: 8px 16px; /* Vertical and horizontal gap */
+    font-size: 0.78rem; /* Small compact text matching screen designs */
+    color: #333; /* Dark gray text color */
+    padding-left: 20px; /* List indentation */
+}
+
+.priority-list-grid li {
+    list-style-type: disc; /* Bullet lists */
+    margin-bottom: 4px; /* Margins */
+}
+
+/* Added: Tracking page layout styles */
+.track-header-section {
+    display: flex; /* Flex layout */
+    justify-content: space-between; /* Space out resident greeting and progress bar */
+    align-items: flex-start; /* Top align */
+    gap: 30px; /* Space between columns */
+    background: #fff; /* White background container */
+    border: 1px solid #e0e0e0; /* Gray border */
+    border-radius: 6px; /* Rounded corners */
+    padding: 24px; /* Inner padding */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04); /* Subtly raised shadow */
+    margin-bottom: 30px; /* Space below header */
+}
+
+.track-greeting h2 {
+    font-size: 1.8rem; /* Large name text */
+    font-weight: 800; /* Extra bold text */
+    margin-bottom: 12px; /* Space below greeting */
+}
+
+.track-metadata {
+    font-size: 0.88rem; /* Metadata text size */
+    color: #333; /* Dark gray text */
+    line-height: 1.6; /* Spacing */
+}
+
+/* Added: Progress bar container for the horizontal timeline */
+.progress-container {
+    flex: 1; /* Stretch container */
+    max-width: 600px; /* Max width */
+    background-color: #F5F5F5; /* Light gray background box */
+    padding: 20px; /* Inside padding */
+    border-radius: 6px; /* Small corner round */
+    border: 1px solid #e0e0e0; /* Subtle border */
+}
+
+.progress-labels {
+    display: flex; /* Align labels in a row */
+    justify-content: space-between; /* Evenly distribute horizontally */
+    margin-bottom: 16px; /* Space below labels */
+    font-size: 0.85rem; /* Text size */
+    font-weight: 700; /* Bold labels */
+    color: #000; /* Black color */
+}
+
+.progress-labels span {
+    flex: 1; /* Equal space */
+    text-align: center; /* Center aligned */
+}
+
+.progress-labels span:first-child {
+    text-align: left; /* Left align start */
+}
+
+.progress-labels span:last-child {
+    text-align: right; /* Right align end */
+}
+
+/* Added: Progress bar track base matching the wireframe designs */
+.progress-track-base {
+    background-color: #E0E0E0; /* Light gray base bar */
+    height: 20px; /* Thickness of progress track */
+    border-radius: 10px; /* Fully rounded capsule track */
+    width: 100%; /* Take full width */
+    position: relative; /* Relative coordinates */
+    overflow: hidden; /* Mask inner progress fill */
+}
+
+/* Added: Progress bar dynamic fill based on current report status */
+.progress-track-fill {
+    background-color: #555555; /* Dark gray active progress bar */
+    height: 100%; /* Span full track height */
+    border-radius: 10px; /* Match capsule track */
+    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1); /* Smooth status transitions */
+}
+
+/* Added: Double column layout on the tracking page */
+.track-columns {
+    display: grid; /* Grid container */
+    grid-template-columns: 1.2fr 1fr; /* Left summary slightly wider than updates */
+    gap: 40px; /* Space between columns */
+    align-items: start; /* Top aligned */
+}
+
+/* Added: Gray info box cards inside the Report Summary column */
+.summary-card {
+    background-color: #F0F0F0; /* Light gray background */
+    border-radius: 6px; /* Rounded corners */
+    padding: 16px 20px; /* Card padding */
+    margin-bottom: 16px; /* Spacing between card groups */
+    border: 1px solid #e0e0e0; /* Subtle boundary */
+    font-size: 0.85rem; /* Compact layout size */
+    color: #000; /* Text black */
+    line-height: 1.8; /* Line spacing */
+}
+
+.summary-card div {
+    margin-bottom: 4px; /* Separation between details */
+}
+
+.summary-card h3 {
+    margin-bottom: 12px; /* Space below heading */
+    font-size: 1rem; /* Heading size */
+    border-bottom: 1px solid #ccc; /* Underline */
+    padding-bottom: 6px; /* Padding */
+}
+
+/* Added: Photo evidence placeholder matching the visual of the wireframe */
+.photo-placeholder {
+    background-color: #EBEBEB; /* Light gray box background */
+    border: 1px solid #ccc; /* Border around photo */
+    border-radius: 4px; /* Small corner rounding */
+    height: 220px; /* Fixed height for rectangular placeholder */
+    display: flex; /* Flex layout */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    font-size: 1.2rem; /* Large font size */
+    font-weight: 800; /* Bold placeholder text */
+    color: #000; /* Black color for 'PHOTO' text */
+    letter-spacing: 1px; /* Spacing */
+    text-transform: uppercase; /* Upper 'PHOTO' text */
+    margin-bottom: 16px; /* Spacing below photo */
+    overflow: hidden; /* Contain inner image scale */
+}
+
+.photo-placeholder img {
+    width: 100%; /* Stretch fully width */
+    height: 100%; /* Stretch fully height */
+    object-fit: cover; /* Crop nicely to fit frame */
+}
+
+/* Added: Announcements section styles */
+.announcements-notice-banner {
+    background-color: #F5F5F5; /* Very light gray notice banner */
+    border: 1px solid #e0e0e0; /* Subtle borders */
+    padding: 16px; /* Padding inside the banner */
+    text-align: center; /* Center notice banner text */
+    font-size: 0.95rem; /* Text size */
+    color: #333; /* Dark gray text */
+    margin-bottom: 30px; /* Space below banner */
+    border-radius: 4px; /* Rounded corners */
+}
+
+/* Added: Accordion line items for different announcement categories */
+.accordion-item {
+    margin-bottom: 16px; /* Space between accordion categories */
+    border-bottom: 1px solid #e0e0e0; /* Divider line at the bottom */
+    padding-bottom: 16px; /* Padding above divider */
+}
+
+.accordion-header {
+    display: flex; /* Align accordion title and icon horizontally */
+    align-items: center; /* Center vertically */
+    gap: 12px; /* Gap between icon and text */
+    font-weight: 700; /* Bold title text */
+    font-size: 1.1rem; /* Title size */
+    color: #000; /* Black text */
+    cursor: pointer; /* Click pointer indicator */
+    user-select: none; /* Prevent text highlighting */
+}
+
+/* Added: Accordion icon depicting three horizontal stacked lines matching the wireframe */
+.accordion-icon::before {
+    content: '≡'; /* Stacked menu/accordion icon from wireframe */
+    font-size: 1.4rem; /* Enlarged accordion icon */
+    font-weight: bold; /* Bold icon */
+    color: #000; /* Black color */
+}
+
+/* Added: Content box revealed when accordion expands */
+.accordion-content {
+    margin-top: 12px; /* Space below header when expanded */
+    background-color: #ECECEC; /* Light gray content background card */
+    border: 1px solid #dcdcdc; /* Subtle card border */
+    border-radius: 6px; /* Rounded corners */
+    padding: 24px; /* Generous inside padding */
+    font-size: 0.9rem; /* Text size */
+    color: #222; /* Text color */
+    line-height: 1.6; /* Spacing */
+    transition: max-height 0.2s ease-out; /* Smooth toggle transitions */
+}
+
+/* Dynamic state classes for JS toggles */
+.accordion-content.collapsed {
+    display: none; /* Hide when collapsed */
+}
+
+
+/* =============================================================
+   ADMIN PORTAL SPECIFIC STYLING
+   Added: Complete set of responsive monochromatic styles for the Admin Portal
+   ============================================================= */
+
+/* Admin layout outer wrapper dividing sidebar and main content */
+.admin-layout-wrapper {
+    display: flex; /* Flex layout splitting sidebar and content area */
+    min-height: 100vh; /* Fill complete viewport height */
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: #ECECEC; /* Consistent light gray background */
+}
+
+/* Top Horizontal Banner Ribbon */
+.admin-header-banner {
+    background-color: #D9D9D9; /* Shaded grey header ribbon */
+    border-bottom: 2px solid #C0C0C0; /* Subtle outline separator */
+    padding: 12px 24px; /* Internal padding */
+    display: flex; /* Horizontally align brand elements */
+    align-items: center; /* Center brand seal vertically */
+    justify-content: space-between; /* Space out items */
+    position: sticky; /* Keep at top */
+    top: 0;
+    z-index: 100;
+}
+
+.admin-header-brand {
+    display: flex; /* Seal image next to text */
+    align-items: center; /* Vertical center brand */
+    gap: 12px; /* Spacing */
+}
+
+.admin-header-seal {
+    width: 38px; /* Standard City Seal width */
+    height: 38px; /* Standard Seal height */
+    object-fit: contain; /* Align cleanly */
+}
+
+.admin-header-text {
+    font-size: 1.15rem;
+    font-weight: 800; /* Bold sans-serif text */
+    color: #000000; /* Deep black text */
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+/* Persistent Left Vertical Sidebar */
+.admin-sidebar {
+    width: 250px; /* Fixed vertical panel width */
+    background-color: #D9D9D9; /* Light grey monochromatic sidebar */
+    border-right: 2px solid #C0C0C0; /* Sidebar vertical line separator */
+    display: flex;
+    flex-direction: column; /* Stack profile, links, and logouts vertically */
+    padding: 24px 16px;
+    box-sizing: border-box;
+}
+
+/* Sidebar profile block with avatar */
+.sidebar-profile-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+    border-bottom: 1px solid #B0B0B0; /* Soft horizontal card separator */
+}
+
+.sidebar-avatar-circle {
+    width: 44px;
+    height: 44px;
+    background-color: #000000; /* Black solid fill avatar circle */
+    border-radius: 50%; /* Circle border shape */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sidebar-avatar-letter {
+    color: #FFFFFF; /* White text inside avatar */
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+
+.sidebar-profile-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-profile-role {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #000000;
+}
+
+.sidebar-profile-clearance {
+    font-size: 0.75rem;
+    color: #555555;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-top: 2px;
+}
+
+/* Sidebar Navigation Items List */
+.sidebar-nav-list {
+    list-style: none; /* Strip listing bullets */
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column; /* Vertical links */
+    gap: 8px; /* Gaps between tabs */
+}
+
+.sidebar-nav-item a {
+    display: block;
+    padding: 10px 16px;
+    text-decoration: none; /* Strip underline defaults */
+    color: #333333; /* Dark gray text */
+    font-size: 0.9rem;
+    font-weight: 700;
+    border-radius: 4px;
+    transition: all 0.15s ease-in-out;
+}
+
+.sidebar-nav-item a:hover {
+    background-color: #C0C0C0; /* Shaded hover color */
+    color: #000000;
+}
+
+/* Sidebar Active Module tab highlights */
+.sidebar-nav-item a.active {
+    background-color: #A0A0A0; /* Shaded dark gray tab active highlight */
+    color: #000000; /* Strict black text */
+    position: relative;
+}
+
+.sidebar-nav-item a.active::after {
+    content: '>'; /* Right arrow icon mapping administrator location */
+    position: absolute;
+    right: 16px; /* Position at the right edge */
+    font-weight: 900;
+    font-size: 0.95rem;
+    color: #000000;
+}
+
+/* Sidebar bottom align logout container */
+.sidebar-footer {
+    margin-top: auto; /* Push logout button to vertical bottom */
+    padding-top: 20px;
+    border-top: 1px solid #B0B0B0;
+}
+
+.btn-sidebar-logout {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #E5E5E5;
+    border: 1px solid #A0A0A0;
+    color: #000000;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-align: center;
+    border-radius: 4px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.15s ease;
+}
+
+.btn-sidebar-logout:hover {
+    background-color: #C8C8C8; /* Darker grey on hover */
+}
+
+/* Administrative content workspace pane */
+.admin-workspace {
+    flex-grow: 1; /* Stretch workspace fully */
+    padding: 32px;
+    overflow-y: auto; /* Scroll overflowing dashboards vertically */
+    box-sizing: border-box;
+}
+
+.admin-page-title {
+    font-size: 1.7rem;
+    font-weight: 800;
+    color: #000000;
+    margin: 0 0 8px 0;
+}
+
+.admin-page-subtitle {
+    font-size: 0.95rem;
+    color: #555555;
+    margin: 0 0 24px 0;
+}
+
+/* Split-Pane admin login screen */
+.admin-split-login-container {
+    display: flex;
+    min-height: 100vh;
+    font-family: 'Inter', sans-serif;
+    background-color: #FFFFFF;
+}
+
+/* Left Half Pane — Manila City Hall Graphic Visual */
+.admin-login-visual-pane {
+    flex: 1.1; /* Slightly wider display visual */
+    background-color: #000000;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.55)), url('/static/images/city_hall.jpg');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; /* Overlaid text positioned at the bottom */
+    padding: 60px;
+    color: #FFFFFF;
+}
+
+/* Fallback fallback if visual image file does not load */
+.admin-login-visual-pane:not([style*="url"]) {
+    background: linear-gradient(135deg, #1C1C1C 0%, #383838 100%);
+}
+
+.admin-login-visual-title {
+    font-size: 2.2rem;
+    font-weight: 800;
+    line-height: 1.25;
+    margin-bottom: 12px;
+}
+
+.admin-login-visual-subtitle {
+    font-size: 1.05rem;
+    color: #E0E0E0;
+    max-width: 480px;
+    line-height: 1.5;
+}
+
+/* Right Half Pane — Credential entry fields */
+.admin-login-form-pane {
+    flex: 0.9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px;
+    background-color: #FFFFFF;
+}
+
+.admin-login-form-card {
+    width: 100%;
+    max-width: 400px; /* Aligned compact card shape */
+}
+
+/* Metric Counter Cards Grid */
+.admin-metric-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* Exactly 4 column cards layout */
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.admin-metric-card {
+    background-color: #D9D9D9; /* Light grey monochromatic grid card */
+    border: 1px solid #C0C0C0;
+    border-radius: 6px;
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.15s ease;
+}
+
+.admin-metric-card:hover {
+    transform: translateY(-2px); /* Interactive lift state */
+}
+
+.admin-metric-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #444444;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+}
+
+.admin-metric-value {
+    font-size: 1.9rem;
+    font-weight: 800;
+    color: #000000;
+}
+
+/* Layout section split dashboards */
+.admin-dashboard-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Splitted half layouts */
+    gap: 20px;
+    margin-top: 24px;
+}
+
+/* Red-Accented Emergency list */
+.emergency-alerts-card {
+    background-color: #FFFFFF;
+    border: 2px solid #000000; /* Strong outline border */
+    border-radius: 6px;
+    padding: 20px;
+}
+
+.emergency-alert-title {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #000000;
+    border-bottom: 2px solid #C0C0C0;
+    padding-bottom: 12px;
+    margin-bottom: 16px;
+}
+
+.emergency-alerts-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.emergency-alert-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #333333;
+}
+
+/* Distinct red accent bullet trigger dot */
+.emergency-alert-bullet {
+    width: 10px;
+    height: 10px;
+    background-color: #FF0000; /* Strict bold red emergency dot */
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+/* Dashboard Activities Logging widget */
+.recent-activities-card {
+    background-color: #FFFFFF;
+    border: 1px solid #C0C0C0;
+    border-radius: 6px;
+    padding: 20px;
+}
+
+.recent-activity-title {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #000000;
+    border-bottom: 1px solid #C0C0C0;
+    padding-bottom: 12px;
+    margin-bottom: 16px;
+}
+
+.recent-activities-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.recent-activity-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.85rem;
+    padding-bottom: 8px;
+    border-bottom: 1px dashed #E0E0E0;
+}
+
+.activity-text {
+    color: #333333;
+    font-weight: 600;
+}
+
+.activity-timestamp {
+    font-size: 0.75rem;
+    color: #777777;
+    font-weight: 700;
+}
+
+/* Search bar control wraps */
+.admin-search-wrapper {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 12px;
+}
+
+.admin-search-input {
+    flex-grow: 1;
+    padding: 10px 16px;
+    background-color: #FFFFFF;
+    border: 1px solid #A0A0A0;
+    border-radius: 20px; /* Pill styled filter boxes */
+    font-size: 0.9rem;
+    font-family: inherit;
+}
+
+.btn-admin-search {
+    padding: 10px 24px;
+    background-color: #000000;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 20px;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 0.85rem;
+}
+
+/* Dual-Pane officials workspace alignment */
+.admin-officials-pane-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr; /* Left menu list column, right edit columns */
+    gap: 20px;
+}
+
+/* Scrollable left-hand queues list box */
+.officials-queue-pane {
+    background-color: #FFFFFF;
+    border: 1px solid #C0C0C0;
+    border-radius: 6px;
+    padding: 16px;
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+.queue-items-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.queue-card-btn {
+    display: block;
+    width: 100%;
+    text-align: left;
+    background-color: #F0F0F0;
+    border: 1px solid #D0D0D0;
+    padding: 12px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.15s ease;
+}
+
+.queue-card-btn:hover {
+    background-color: #E0E0E0;
+}
+
+.queue-card-btn.selected {
+    background-color: #C8C8C8; /* Highlight state */
+    border-color: #A0A0A0;
+}
+
+.queue-card-ref {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #555555;
+    margin-bottom: 4px;
+}
+
+.queue-card-concern {
+    font-size: 0.9rem;
+    font-weight: 800;
+    color: #000000;
+    margin-bottom: 2px;
+}
+
+.queue-card-reporter {
+    font-size: 0.8rem;
+    color: #333333;
+}
+
+/* Right details modifier card */
+.officials-details-pane {
+    background-color: #FFFFFF;
+    border: 1px solid #C0C0C0;
+    border-radius: 6px;
+    padding: 24px;
+}
+
+.details-meta-block {
+    background-color: #F8F8F8;
+    border-radius: 4px;
+    padding: 16px;
+    margin-bottom: 20px;
+}
+
+.details-meta-item {
+    font-size: 0.85rem;
+    margin-bottom: 8px;
+    color: #333333;
+    font-weight: 600;
+}
+
+.details-meta-item strong {
+    color: #000000;
+    font-weight: 800;
+}
+
+/* CSS-driven dynamic complaints vertical bar charts */
+.admin-chart-box {
+    background-color: #FFFFFF;
+    border: 1px solid #C0C0C0;
+    border-radius: 6px;
+    padding: 24px;
+    margin-bottom: 24px;
+}
+
+.admin-chart-title {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #000000;
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+/* flex based grid bar representations */
+.css-flex-bar-chart {
+    display: flex;
+    align-items: flex-end; /* Align bottom of all complaint column heights */
+    justify-content: space-around;
+    height: 250px; /* Chart height limits */
+    border-left: 2px solid #000000; /* Axis left outline */
+    border-bottom: 2px solid #000000; /* Axis bottom outline */
+    padding: 16px 24px 0 24px;
+    margin-bottom: 40px;
+    position: relative;
+}
+
+.chart-bar-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-grow: 1;
+    max-width: 80px;
+}
+
+/* Vertical shaded grey bar fill height */
+.chart-bar-fill {
+    width: 44px;
+    background-color: #8C8C8C; /* Sleek shaded monochromatic grey fill */
+    border-radius: 4px 4px 0 0;
+    position: relative;
+    transition: height 0.4s ease-out; /* Slide up animations */
+    display: flex;
+    justify-content: center;
+}
+
+.chart-bar-value-tooltip {
+    position: absolute;
+    top: -24px;
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: #000000;
+}
+
+.chart-bar-label {
+    margin-top: 10px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #444444;
+    text-align: center;
+}
+
+/* Grid layout dashboard reporting analytics footer */
+.analytics-footer-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr 1fr; /* Splitted footer charts */
+    gap: 16px;
+    margin-top: 24px;
+}
+
+.analytics-footer-card {
+    background-color: #FFFFFF;
+    border: 1px solid #C0C0C0;
+    border-radius: 6px;
+    padding: 16px;
+}
+
+.analytics-card-title {
+    font-size: 1rem;
+    font-weight: 800;
+    color: #000000;
+    border-bottom: 1.5px solid #C0C0C0;
+    padding-bottom: 8px;
+    margin-bottom: 12px;
+}
+
+.area-ranking-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.area-ranking-item {
+    font-size: 0.85rem;
+    padding: 10px 0;
+    border-bottom: 1px solid #EAEAEA;
+    font-weight: 700;
+    color: #333333;
+}
+
+.area-ranking-item strong {
+    color: #000000;
+    font-weight: 800;
+}
+
+/* Feedback card grid elements styling */
+.feedback-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 columns cards grid */
+    gap: 20px;
+}
+
+.feedback-card-item {
+    background-color: #E3E3E3; /* Monochromatic shaded grey card */
+    border: 1px solid #C0C0C0;
+    border-radius: 8px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.feedback-card-header {
+    border-bottom: 1px solid #C8C8C8;
+    padding-bottom: 10px;
+    margin-bottom: 12px;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: #333333;
+}
+
+.feedback-card-header strong {
+    font-weight: 800;
+    color: #000000;
+}
+
+.feedback-comment {
+    font-style: italic;
+    font-size: 0.9rem;
+    color: #222222;
+    margin-bottom: 12px;
+    line-height: 1.5;
+    font-weight: 600;
+}
+
+/* Star rating score bullets display */
+.feedback-star-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    background-color: #000000; /* Dark contrast rating circle badge */
+    color: #FFFFFF;
+    font-size: 0.75rem;
+    font-weight: 800;
+    border-radius: 12px;
+}
+
+/* Mini custom announcements posting card */
+.btn-ann-post {
+    padding: 10px 20px;
+    background-color: #000000;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 4px;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 0.85rem;
+    text-decoration: none;
+}
+
+/* Post modal/form card wrapper */
+.announcement-form-box {
+    background-color: #FFFFFF;
+    border: 1px solid #C0C0C0;
+    border-radius: 6px;
+    padding: 20px;
+    margin-bottom: 24px;
+}
+
+.announcement-form-title {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #000000;
+    margin: 0 0 16px 0;
+}
+
+

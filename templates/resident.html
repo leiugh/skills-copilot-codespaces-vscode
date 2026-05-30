@@ -1,0 +1,95 @@
+<!-- resident.html — Resident concern report submission form -->
+<!-- Extends the shared base template for consistent header/footer -->
+{% extends "base.html" %}
+
+{% block title %}Report a Concern{% endblock %}
+
+{% block content %}
+    <div class="page-container">
+
+        <!-- Page heading -->
+        <h2 class="page-title">Report a Concern</h2>
+        <p class="page-subtitle">Fill out the form below to submit your community concern to the City of Manila.</p>
+
+        <!-- Form card wrapper — provides the white bordered card look -->
+        <div class="form-card">
+
+            <!-- Form posts to the /resident route; enctype enables image file uploads -->
+            <form method="POST" action="{{ url_for('resident') }}" enctype="multipart/form-data">
+
+                <!-- Two-column grid layout for form fields -->
+                <div class="form-grid">
+
+                    <!-- Full Name field -->
+                    <div class="form-group">
+                        <label for="name">Full Name <span class="required">*</span></label>
+                        <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+                    </div>
+
+                    <!-- Location field -->
+                    <div class="form-group">
+                        <label for="location">Location <span class="required">*</span></label>
+                        <input type="text" id="location" name="location" placeholder="Barangay, street, or area" required>
+                    </div>
+
+                    <!-- Concern category dropdown — maps to the concern field in the backend -->
+                    <div class="form-group">
+                        <label for="concern">Concern Category <span class="required">*</span></label>
+                        <select id="concern" name="concern" required>
+                            <option value="" disabled selected>Select a category</option>
+                            <option value="Road Damage">Road Damage</option>
+                            <option value="Flood">Flood</option>
+                            <option value="Garbage">Garbage</option>
+                            <option value="Noise Complaint">Noise Complaint</option>
+                            <option value="Illegal Construction">Illegal Construction</option>
+                            <option value="Street Lighting">Street Lighting</option>
+                            <option value="Water Supply">Water Supply</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+                    <!-- Severity radio buttons — values match PriorityLevel constants -->
+                    <div class="form-group">
+                        <label>Severity <span class="required">*</span></label>
+                        <div class="severity-options">
+                            <!-- Minor severity — maps to PriorityLevel.MINOR -->
+                            <label>
+                                <input type="radio" name="severity" value="Minor" required>
+                                Minor
+                            </label>
+                            <!-- Major severity — maps to PriorityLevel.MAJOR -->
+                            <label>
+                                <input type="radio" name="severity" value="Major">
+                                Major
+                            </label>
+                            <!-- Critical severity — maps to PriorityLevel.CRITICAL -->
+                            <label>
+                                <input type="radio" name="severity" value="Critical">
+                                Critical
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Description textarea — additional details about the concern -->
+                    <div class="form-group full-width">
+                        <label for="description">Description</label>
+                        <textarea id="description" name="description" placeholder="Provide additional details about your concern (optional)"></textarea>
+                    </div>
+
+                    <!-- Image upload field — optional photo evidence -->
+                    <div class="form-group full-width">
+                        <label for="image">Upload Photo (optional)</label>
+                        <input type="file" id="image" name="image" accept="image/*">
+                    </div>
+
+                </div>
+
+                <!-- Submit button -->
+                <button type="submit" class="btn-submit">Submit Report</button>
+
+            </form>
+
+        </div>
+
+    </div>
+{% endblock %}

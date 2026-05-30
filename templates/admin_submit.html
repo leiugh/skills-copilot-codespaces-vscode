@@ -1,0 +1,182 @@
+<!-- admin_submit.html — Embeds the citizen concern reporting form directly within the admin sidebar context -->
+{% extends "admin_base.html" %}
+
+{% block title %}Submit Citizen Concern{% endblock %}
+
+{% block admin_content %}
+    
+    <!-- Page Headings -->
+    <h2 class="admin-page-title">Submit Citizen Concern</h2>
+    <p class="admin-page-subtitle">File community concerns directly into the system on behalf of citizens or city officers.</p>
+
+    <!-- Embedded Two-Column Report Form Structure -->
+    <div class="form-card" style="padding:32px;">
+        
+        <div class="report-layout" style="margin-top:0;">
+
+            <!-- Left Column: Pill Form Inputs -->
+            <div class="vertical-divider" style="padding-right:32px; border-right:1px solid #CCC;">
+                <form method="POST" action="{{ url_for('admin_submit') }}" enctype="multipart/form-data" style="display: flex; flex-direction: column; gap: 20px;">
+
+                    <!-- Full Name input field -->
+                    <div class="form-group">
+                        <label for="name" style="margin-bottom: 6px; font-weight: 700; font-size:0.85rem; color:#000;">Full name:</label>
+                        <input type="text" id="name" name="name" class="pill-input" placeholder="Enter citizen full name" required>
+                    </div>
+
+                    <!-- Email input field -->
+                    <div class="form-group">
+                        <label for="email" style="margin-bottom: 6px; font-weight: 700; font-size:0.85rem; color:#000;">Email:</label>
+                        <input type="email" id="email" name="email" class="pill-input" placeholder="Enter citizen email address" required>
+                    </div>
+
+                    <!-- Location input field -->
+                    <div class="form-group">
+                        <label for="location" style="margin-bottom: 6px; font-weight: 700; font-size:0.85rem; color:#000;">Location:</label>
+                        <input type="text" id="location" name="location" class="pill-input" placeholder="Barangay, street address, or landmark" required>
+                    </div>
+
+                    <!-- Category of Concern dropdown listing all designated concerns -->
+                    <div class="form-group">
+                        <label for="concern" style="margin-bottom: 6px; font-weight: 700; font-size:0.85rem; color:#000;">Category of Concern:</label>
+                        <select id="concern" name="concern" class="pill-input" required>
+                            <option value="" disabled selected>Select category of concern</option>
+                            <optgroup label="Critical Concerns">
+                                <option value="Fire Incident">Fire Incident</option>
+                                <option value="Flooding or Natural Disaster">Flooding or Natural Disaster</option>
+                                <option value="Ongoing Crime (Robbery/Assault/Violence)">Ongoing Crime (Robbery/Assault/Violence)</option>
+                                <option value="Medical Emergency">Medical Emergency</option>
+                                <option value="Gas Leak">Gas Leak</option>
+                                <option value="Electrical Fire or Exposed Live Wires">Electrical Fire or Exposed Live Wires</option>
+                                <option value="Missing Person">Missing Person</option>
+                                <option value="Building/House Collapse">Building/House Collapse</option>
+                                <option value="Road Accident">Road Accident</option>
+                            </optgroup>
+                            <optgroup label="Major Concerns">
+                                <option value="Large Potholes">Large Potholes</option>
+                                <option value="Water Interruption in the Community">Water Interruption in the Community</option>
+                                <option value="Power Outage">Power Outage</option>
+                                <option value="Illegal Dumping of Garbage">Illegal Dumping of Garbage</option>
+                                <option value="Damaged Drainage System">Damaged Drainage System</option>
+                                <option value="Noise Complaint">Noise Complaint</option>
+                                <option value="Broken Streetlight">Broken Streetlight</option>
+                            </optgroup>
+                            <optgroup label="Minor Concerns">
+                                <option value="Small Potholes">Small Potholes</option>
+                                <option value="Graffiti / Vandalism">Graffiti / Vandalism</option>
+                                <option value="Overgrown Grass / Plants">Overgrown Grass / Plants</option>
+                                <option value="Minor Noise Complaint">Minor Noise Complaint</option>
+                                <option value="Broken Bench or Public Use">Broken Bench or Public Use</option>
+                                <option value="Request for Additional Bins">Request for Additional Bins</option>
+                                <option value="Minor Sidewalk Crack">Minor Sidewalk Crack</option>
+                            </optgroup>
+                        </select>
+                    </div>
+
+                    <!-- Description field -->
+                    <div class="form-group">
+                        <label for="description" style="margin-bottom: 6px; font-weight: 700; font-size:0.85rem; color:#000;">Description of Issue:</label>
+                        <textarea id="description" name="description" class="pill-input" style="height: 100px; resize: none;" placeholder="Provide additional details regarding the concern..."></textarea>
+                    </div>
+
+                    <!-- Date/Time field -->
+                    <div class="form-group">
+                        <label for="date_reported" style="margin-bottom: 6px; font-weight: 700; font-size:0.85rem; color:#000;">Date/Time:</label>
+                        <input type="text" id="date_reported" name="date_reported" class="pill-input" placeholder="Select reported date and time">
+                    </div>
+
+                    <!-- Photo attachment file input -->
+                    <div class="form-group">
+                        <label for="image" style="margin-bottom: 6px; font-weight: 700; font-size:0.85rem; color:#000;">Upload Photo:</label>
+                        <input type="file" id="image" name="image" class="pill-input" accept="image/*">
+                    </div>
+
+                    <!-- Green submit button matching wireframe style, aligned right -->
+                    <div style="text-align: right; margin-top: 10px;">
+                        <button type="submit" class="btn-submit-green" style="font-size:0.95rem; padding:10px 24px;">submit</button>
+                    </div>
+
+                </form>
+            </div>
+
+            <!-- Right Column: Priority Level guide -->
+            <div class="priority-container" style="padding-left:32px;">
+                <h2 style="font-size:1.5rem; font-weight:800; margin:0 0 16px 0; color:#000;">Priority Level Guide</h2>
+
+                <!-- Critical priority tier -->
+                <div class="priority-section" style="margin-bottom:20px;">
+                    <div class="priority-header" style="margin-bottom:10px;">
+                        <span style="font-weight:800;">Critical</span>
+                        <div class="priority-bar-critical"></div>
+                    </div>
+                    <ul class="priority-list-grid" style="font-size:0.8rem; font-weight:600; color:#444;">
+                        <li>Fire incidents</li>
+                        <li>Flooding or natural disasters</li>
+                        <li>Ongoing crimes (robbery, assault, violence)</li>
+                        <li>Medical emergencies</li>
+                        <li>Gas leaks</li>
+                        <li>Electrical fire or exposed live wires</li>
+                        <li>Missing persons</li>
+                        <li>Building/House collapse</li>
+                        <li>Road accidents</li>
+                    </ul>
+                </div>
+
+                <!-- Major priority tier -->
+                <div class="priority-section" style="margin-bottom:20px;">
+                    <div class="priority-header" style="margin-bottom:10px;">
+                        <span style="font-weight:800;">Major</span>
+                        <div class="priority-bar-major"></div>
+                    </div>
+                    <ul class="priority-list-grid" style="font-size:0.8rem; font-weight:600; color:#444;">
+                        <li>Large potholes</li>
+                        <li>Water interruption in the community</li>
+                        <li>Power outages</li>
+                        <li>Illegal dumping of garbage</li>
+                        <li>Damaged drainage systems</li>
+                        <li>Noise complaints</li>
+                        <li>Broken streetlights</li>
+                    </ul>
+                </div>
+
+                <!-- Minor priority tier -->
+                <div class="priority-section">
+                    <div class="priority-header" style="margin-bottom:10px;">
+                        <span style="font-weight:800;">Minor</span>
+                        <div class="priority-bar-minor"></div>
+                    </div>
+                    <ul class="priority-list-grid" style="font-size:0.8rem; font-weight:600; color:#444;">
+                        <li>Small potholes</li>
+                        <li>Graffiti / Vandalism</li>
+                        <li>Overgrown grass / plants</li>
+                        <li>Minor noise complaints</li>
+                        <li>Broken benches or public use</li>
+                        <li>Request for additional bins</li>
+                        <li>Minor sidewalk cracks</li>
+                    </ul>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock %}
+
+{% block extra_js %}
+    <!-- Javascript to dynamically pre-fill the reported Date/Time matching ReportSystem string formats -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var dateInput = document.getElementById("date_reported");
+            if (dateInput) {
+                var now = new Date();
+                var options = { month: 'long', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true };
+                var formatted = now.toLocaleDateString('en-US', options);
+                // Formatting cleanup to match e.g. "May 31, 2026 01:33 AM"
+                formatted = formatted.replace(" at", "");
+                dateInput.value = formatted;
+            }
+        });
+    </script>
+{% endblock %}

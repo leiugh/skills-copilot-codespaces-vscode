@@ -1,0 +1,99 @@
+<!-- admin_base.html — Master layout template for administrative pages -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}MCCRRS Admin{% endblock %} | City of Manila</title>
+    <!-- Modern Inter Font family for visual premium feel -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Main styles including the custom MCCRRS administrative layouts -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body style="margin:0; background-color:#ECECEC;">
+
+    <!-- Top Horizontal Brand Banner Ribbon -->
+    <header class="admin-header-banner">
+        <div class="admin-header-brand">
+            <!-- Official City of Manila seal logo image -->
+            <img src="{{ url_for('static', filename='images/manila-logo.png') }}" alt="Manila Seal" class="admin-header-seal">
+            <!-- Bold brand text in black sans-serif font -->
+            <span class="admin-header-text">City of Manila</span>
+        </div>
+        <div style="font-size:0.8rem; font-weight:700; color:#555; text-transform:uppercase;">
+            Community Concern Reporting & Response System
+        </div>
+    </header>
+
+    <!-- Unified Sidebar & Workspace Content Wrap -->
+    <div class="admin-layout-wrapper">
+
+        <!-- Persistent Left Sidebar Panel -->
+        <aside class="admin-sidebar">
+            
+            <!-- Administrator Profile Avatar Circle -->
+            <div class="sidebar-profile-card">
+                <div class="sidebar-avatar-circle">
+                    <!-- Dynamic avatar capital letter based on logged session username -->
+                    <span class="sidebar-avatar-letter">{{ session.get('admin_name', 'A')[0] }}</span>
+                </div>
+                <div class="sidebar-profile-details">
+                    <!-- Dynamic Admin username -->
+                    <span class="sidebar-profile-role">{{ session.get('admin_name', 'Admin') }}</span>
+                    <!-- Dynamic Security Clearance Level badge -->
+                    <span class="sidebar-profile-clearance">{{ session.get('admin_clearance', 'Minor') }} clearance</span>
+                </div>
+            </div>
+
+            <!-- Ordered Navigation Modules list -->
+            <nav>
+                <ul class="sidebar-nav-list">
+                    <!-- 1. Overview routes to /admin/dashboard -->
+                    <li class="sidebar-nav-item">
+                        <a href="{{ url_for('admin_dashboard') }}" class="{{ 'active' if active_module == 'overview' else '' }}">Overview</a>
+                    </li>
+                    <!-- 2. Reports routes to /admin/reports -->
+                    <li class="sidebar-nav-item">
+                        <a href="{{ url_for('admin_reports') }}" class="{{ 'active' if active_module == 'reports' else '' }}">Reports</a>
+                    </li>
+                    <!-- 3. Officials routes to /admin/officials -->
+                    <li class="sidebar-nav-item">
+                        <a href="{{ url_for('admin_officials') }}" class="{{ 'active' if active_module == 'officials' else '' }}">Officials</a>
+                    </li>
+                    <!-- 4. Analytics routes to /admin/analytics -->
+                    <li class="sidebar-nav-item">
+                        <a href="{{ url_for('admin_analytics') }}" class="{{ 'active' if active_module == 'analytics' else '' }}">Analytics</a>
+                    </li>
+                    <!-- 5. Announcements routes to /admin/announcements -->
+                    <li class="sidebar-nav-item">
+                        <a href="{{ url_for('admin_announcements') }}" class="{{ 'active' if active_module == 'announcements' else '' }}">Announcements</a>
+                    </li>
+                    <!-- 6. Feedback routes to /admin/feedback -->
+                    <li class="sidebar-nav-item">
+                        <a href="{{ url_for('admin_feedback') }}" class="{{ 'active' if active_module == 'feedback' else '' }}">Feedback</a>
+                    </li>
+                    <!-- 7. Submit Concern routes to /admin/submit -->
+                    <li class="sidebar-nav-item">
+                        <a href="{{ url_for('admin_submit') }}" class="{{ 'active' if active_module == 'submit' else '' }}">Submit Concern</a>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- Bottom Align Logout button container -->
+            <div class="sidebar-footer">
+                <a href="{{ url_for('admin_logout') }}" class="btn-sidebar-logout">Logout</a>
+            </div>
+
+        </aside>
+
+        <!-- Dynamic Main Workspace content block -->
+        <main class="admin-workspace">
+            {% block admin_content %}{% endblock %}
+        </main>
+
+    </div>
+
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

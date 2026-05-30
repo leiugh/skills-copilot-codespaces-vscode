@@ -1,0 +1,48 @@
+<!-- index.html — Home page for the Manila Community Concern Reporting System -->
+<!-- Extends the shared base template for consistent header/footer -->
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<!-- HERO SECTION — Bright panoramic drone shot background with welcome message -->
+<section class="hero" style="background: url('/static/images/manila-bg-drone-shot.jpg') center/cover no-repeat; min-height: 480px; padding: 60px 30px; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative;">
+
+    <!-- Hero text content — centered welcome message with solid black fonts matching mockup -->
+    <div class="hero-content" style="position: relative; z-index: 2; text-align: center; color: #000000; max-width: 800px; margin-bottom: 32px;">
+        <h2 style="font-size: 2.2rem; font-weight: 800; line-height: 1.3; margin-bottom: 8px;">
+            Welcome to the Community Concern<br>Reporting and Response System!
+        </h2>
+        <h4 style="font-size: 1.1rem; font-weight: 600; color: #333333;">
+            Helping residents report issues quickly and efficiently.
+        </h4>
+    </div>
+
+    <!-- STATISTICS & ANNOUNCEMENTS — Glassmorphic side-by-side cards sitting at the bottom -->
+    <div class="info-container" style="position: relative; z-index: 2; display: flex; gap: 24px; width: 100%; max-width: 900px; margin-top: auto;">
+
+        <!-- Community statistics info box -->
+        <div class="info-box" style="flex: 1; background: rgba(235, 235, 235, 0.7); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.4); border-radius: 12px; padding: 20px 24px;">
+            <h3 style="font-size: 1.05rem; font-weight: 800; color: #000000; margin-bottom: 12px;">Community Statistics</h3>
+
+            <ul style="padding-left: 16px; margin: 0; list-style-type: disc;">
+                <li style="font-size: 0.9rem; font-weight: 600; color: #000000; padding: 4px 0;">120 Resolved Reports</li>
+                <li style="font-size: 0.9rem; font-weight: 600; color: #000000; padding: 4px 0;">35 Active Concerns</li>
+            </ul>
+        </div>
+
+        <!-- Recent announcements info box -->
+        <div class="info-box" style="flex: 1; background: rgba(235, 235, 235, 0.7); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.4); border-radius: 12px; padding: 20px 24px;">
+            <h3 style="font-size: 1.05rem; font-weight: 800; color: #000000; margin-bottom: 12px;">Recent Announcements</h3>
+
+            <ul style="padding-left: 16px; margin: 0; list-style-type: disc;">
+                <li style="font-size: 0.9rem; font-weight: 600; color: #000000; padding: 4px 0;">Road maintenance on [DATE]</li>
+                <li style="font-size: 0.9rem; font-weight: 600; color: #000000; padding: 4px 0;">Flood warning advisory</li>
+                <li style="font-size: 0.9rem; font-weight: 600; color: #000000; padding: 4px 0;">Garbage collection schedule update</li>
+            </ul>
+        </div>
+
+    </div>
+
+</section>
+{% endblock %}

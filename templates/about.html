@@ -1,0 +1,76 @@
+{# about.html — About and Home landing screen for MCCRRS #}
+{# Extends base.html layout template for consistent header/footer #}
+{% extends "base.html" %}
+
+{% block title %}About{% endblock %}
+
+{% block content %}
+    {# Added: Main container styled with the .watermark-bg class to showcase a faint City of Manila logo watermark in the background #}
+    <div class="page-container watermark-bg">
+
+        {# Added: Title greeting header matching the "Hi, Name!" of the wireframe #}
+        <h2 class="page-title" style="font-size: 2.2rem; font-weight: 800; margin-bottom: 16px;">Hi, Name!</h2>
+        
+        {# Added: Descriptive paragraph about Manila's goals for citizen-driven digital platforms #}
+        <p style="font-size: 1.05rem; line-height: 1.7; margin-bottom: 40px; color: #222; text-align: center; max-width: 860px; margin-left: auto; margin-right: auto;">
+            The City of Manila continues to promote accessible, responsive, and people-centered public service 
+            through digital innovation and community engagement. By encouraging active participation from 
+            residents, the city aims to create safer neighborhoods, improve public services, and strengthen 
+            cooperation between citizens and local authorities.
+        </p>
+
+        {# Added: Columns container housing the three informative blocks: System Overview, Purpose/Mission, and How it works #}
+        <div class="about-columns">
+
+            {# Added: Column 1 — System Overview Card #}
+            <div class="about-column-card">
+                {# Card header #}
+                <div class="about-column-header">System Overview</div>
+                {# Card body #}
+                <div class="about-column-body">
+                    <p style="margin-bottom: 12px; text-align: justify;">
+                        The Community Concern Reporting and Response System is a digital platform 
+                        that allows residents to report community issues and track updates in real time.
+                    </p>
+                    <p style="text-align: justify;">
+                        It helps improve communication between citizens and the City Government of Manila 
+                        for faster and more organized public service response.
+                    </p>
+                </div>
+            </div>
+
+            {# Added: Column 2 — Purpose and Mission Card #}
+            <div class="about-column-card">
+                {# Card header #}
+                <div class="about-column-header">Purpose/Mission</div>
+                {# Card body containing bulleted lists #}
+                <div class="about-column-body">
+                    <ul>
+                        <li>Improve response time to community issues</li>
+                        <li>Promote transparency and accountability</li>
+                        <li>Provide a centralized reporting platform</li>
+                        <li>Strengthen communication between citizens and local government</li>
+                    </ul>
+                </div>
+            </div>
+
+            {# Added: Column 3 — How It Works Card #}
+            <div class="about-column-card">
+                {# Card header #}
+                <div class="about-column-header">How it works</div>
+                {# Card body containing numbered steps #}
+                <div class="about-column-body">
+                    <ol>
+                        <li>Submit a Report</li>
+                        <li>Concern is assigned to the proper office</li>
+                        <li>Officials review and investigate the issue</li>
+                        <li>Progress updates are posted in the system</li>
+                        <li>Report is resolved and closed</li>
+                    </ol>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+{% endblock %}

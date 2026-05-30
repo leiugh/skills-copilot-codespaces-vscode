@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Page title block — each child template overrides this -->
+    <title>{% block title %}MCCRRS{% endblock %} — City of Manila</title>
+    <meta name="description" content="Manila Community Concern Reporting and Response System — Report and track community concerns.">
+    <!-- Link to the shared stylesheet via Flask's static file serving -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <!-- HEADER — Consistent across all pages -->
+    <header>
+        <!-- Logo + site name group -->
+        <div class="logo-section">
+            <!-- Manila city seal image served from static/images -->
+            <img src="{{ url_for('static', filename='images/manila-logo.png') }}" alt="Manila Logo">
+            <h1>CITY OF MANILA</h1>
+        </div>
+
+        <!-- Primary navigation — links use url_for for Flask route binding -->
+        <nav>
+            <!-- Added: Home link pointing to the home route. Features active state check. -->
+            <a href="{{ url_for('home') }}" class="{{ 'active' if active_page == 'home' else '' }}">Home</a>
+            
+            <!-- Added: Report link pointing to the report route. Features active state check. -->
+            <a href="{{ url_for('report') }}" class="{{ 'active' if active_page == 'report' else '' }}">Report</a>
+            
+            <!-- Added: Track link pointing to the track route. Features active state check. -->
+            <a href="{{ url_for('track') }}" class="{{ 'active' if active_page == 'track' else '' }}">Track</a>
+            
+            <!-- Added: Announcements link pointing to the announcements route. Features active state check. -->
+            <a href="{{ url_for('announcements') }}" class="{{ 'active' if active_page == 'announcements' else '' }}">Announcements</a>
+            
+            <!-- Added: About link pointing to the about route. Features active state check. -->
+            <a href="{{ url_for('about') }}" class="{{ 'active' if active_page == 'about' else '' }}">About</a>
+        </nav>
+    </header>
+
+    <!-- MAIN CONTENT — Each child template fills this block -->
+    {% block content %}{% endblock %}
+
+    <!-- FOOTER — Consistent across all pages with Manila contact info -->
+    <footer>
+        <div class="footer-left">
+            <p><strong>Email:</strong> publicinfo@manila.gov.ph</p>
+            <p><strong>Facebook:</strong> https://www.facebook.com/ManilaCityGov</p>
+        </div>
+
+        <div class="footer-right">
+            <p><strong>Manila City Hotline:</strong> (02) 8527-3087</p>
+            <p><strong>General Contact Page:</strong> City of Manila Contact Us</p>
+        </div>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!-- admin.html — Admin login page -->
+<!-- Extends the shared base template for consistent header/footer -->
+{% extends "base.html" %}
+
+{% block title %}Admin Login{% endblock %}
+
+{% block content %}
+    <div class="page-container">
+
+        <!-- Page heading -->
+        <h2 class="page-title">Admin Login</h2>
+        <p class="page-subtitle">Enter your credentials to access the admin dashboard.</p>
+
+        <!-- Centered login card — narrower than the full-width form -->
+        <div class="form-card admin-login-card">
+
+            <!-- Display error message if login failed (passed from Flask route) -->
+            {% if error %}
+            <div class="alert-error">
+                {{ error }}
+            </div>
+            {% endif %}
+
+            <!-- Display success message after successful login -->
+            {% if success %}
+            <div class="alert-success">
+                {{ success }}
+            </div>
+            {% endif %}
+
+            <!-- Login form posts to the /admin route -->
+            <form method="POST" action="{{ url_for('admin') }}">
+
+                <!-- Admin Name field -->
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label for="admin_name">Admin Name <span class="required">*</span></label>
+                    <input type="text" id="admin_name" name="admin_name" placeholder="Enter your admin name" required>
+                </div>
+
+                <!-- Password field — maps to Admin.__password in OOP class -->
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label for="password">Password <span class="required">*</span></label>
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                </div>
+
+                <!-- Security Number field — validated against Admin._sec_number_map -->
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label for="sec_number">Security Number <span class="required">*</span></label>
+                    <input type="text" id="sec_number" name="sec_number" placeholder="Enter your security number" required>
+                </div>
+
+                <!-- Submit button -->
+                <button type="submit" class="btn-submit">Login</button>
+
+            </form>
+
+        </div>
+
+    </div>
+{% endblock %}

@@ -1,0 +1,153 @@
+<!-- admin_dashboard.html — Renders dynamic metrics overview, reports queues, and emergency alerts -->
+{% extends "admin_base.html" %}
+
+{% block title %}Dashboard Overview{% endblock %}
+
+{% block admin_content %}
+    
+    <!-- Page Headings -->
+    <h2 class="admin-page-title">Dashboard Overview</h2>
+    <p class="admin-page-subtitle">Real-time indicators, dynamic priority queues, and community alerts.</p>
+
+    <!-- Top Grid Section: Metric data counters -->
+    <section class="admin-metric-grid">
+        
+        <!-- Card 1: Total Reports count -->
+        <div class="admin-metric-card">
+            <div class="admin-metric-title">Total Reports</div>
+            <div class="admin-metric-value">{{ total_reports }}</div>
+        </div>
+
+        <!-- Card 2: Pendings count -->
+        <div class="admin-metric-card">
+            <div class="admin-metric-title">Pendings</div>
+            <div class="admin-metric-value">{{ pending_count }}</div>
+        </div>
+
+        <!-- Card 3: Resolved count -->
+        <div class="admin-metric-card">
+            <div class="admin-metric-title">Resolved</div>
+            <div class="admin-metric-value">{{ resolved_count }}</div>
+        </div>
+
+        <!-- Card 4: Emergency Cases (Critical alerts) -->
+        <div class="admin-metric-card">
+            <div class="admin-metric-title">Emergency Cases</div>
+            <div class="admin-metric-value" style="color: #FF0000;">{{ emergency_count }}</div>
+        </div>
+
+    </section>
+
+    <!-- Mid Section: Recent Reports Database table -->
+    <section class="form-card" style="margin-bottom: 24px; padding: 24px;">
+        <h3 style="font-size:1.15rem; font-weight:800; color:#000; margin:0 0 16px 0;">Recent Reports</h3>
+        
+        {% if recent_reports %}
+        <!-- Responsive data table -->
+        <table class="reports-table" style="width:100%; margin-top:0;">
+            <thead>
+                <tr>
+                    <th style="font-weight:800;">Ref. No</th>
+                    <th style="font-weight:800;">Priority Category</th>
+                    <th style="font-weight:800;">Concern</th>
+                    <th style="font-weight:800;">Location</th>
+                    <th style="font-weight:800;">Date</th>
+                    <th style="font-weight:800; text-align:center;">Assign</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Loop through recent reports -->
+                {% for report in recent_reports %}
+                <tr>
+                    <!-- Report Reference Number auto-increment generator -->
+                    <td>MCCRRS-{{ report.id }}</td>
+                    
+                    <!-- Severity priority category level -->
+                    <td>
+                        <span class="badge badge-{{ report.severity|lower|replace(' ', '-') }}" style="font-weight:700;">
+                            {{ report.severity }}
+                        </span>
+                    </td>
+                    
+                    <!-- Concern description -->
+                    <td>{{ report.concern }}</td>
+                    
+                    <!-- Incident location -->
+                    <td>{{ report.location }}</td>
+                    
+                    <!-- Submission date -->
+                    <td>{{ report.date_reported }}</td>
+                    
+                    <!-- Navigation link routing to edit officials state -->
+                    <td style="text-align:center;">
+                        <a href="{{ url_for('admin_officials', id=report.id) }}" class="btn-primary" style="padding:6px 12px; font-size:0.75rem; border-radius:12px; text-decoration:none; display:inline-block; background-color:#333;">Assign</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <!-- Empty report state -->
+        <div style="text-align:center; padding:30px 0; color:#777; font-weight:700;">
+            No reports are currently queued under your security clearance.
+        </div>
+        {% endif %}
+
+    </section>
+
+    <!-- Lower Section: Split Dashboard Columns -->
+    <div class="admin-dashboard-split">
+
+        <!-- Column Left: Emergency Alerts List (Critical levels highlighted in red bullets) -->
+        <div class="emergency-alerts-card">
+            <h3 class="emergency-alert-title">Emergency Alerts</h3>
+            
+            {% if emergency_alerts %}
+            <ul class="emergency-alerts-list">
+                <!-- Loop emergency alerts -->
+                {% for alert in emergency_alerts %}
+                <li class="emergency-alert-item">
+                    <!-- Bold red circle indicator dot -->
+                    <span class="emergency-alert-bullet"></span>
+                    <div>
+                        <strong>{{ alert.concern }}</strong>
+                        <span style="color:#666; font-size:0.8rem; display:block; font-weight:600; margin-top:2px;">Location: {{ alert.location }}</span>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <!-- Safe state -->
+            <div style="text-align:center; padding:40px 0; color:#555; font-size:0.9rem; font-weight:700;">
+                ✓ No active critical emergency cases.
+            </div>
+            {% endif %}
+
+        </div>
+
+        <!-- Column Right: Recent Activity stream logs -->
+        <div class="recent-activities-card">
+            <h3 class="recent-activity-title">Recent Activities</h3>
+            
+            {% if recent_activities %}
+            <ul class="recent-activities-list">
+                <!-- Loop dynamic log rows -->
+                {% for act in recent_activities %}
+                <li class="recent-activity-item">
+                    <span class="activity-text">{{ act.text }}</span>
+                    <span class="activity-timestamp">{{ act.time }}</span>
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <!-- Empty state logs -->
+            <div style="text-align:center; padding:40px 0; color:#777; font-size:0.9rem; font-weight:700;">
+                No recent activity records found.
+            </div>
+            {% endif %}
+
+        </div>
+
+    </div>
+
+{% endblock %}

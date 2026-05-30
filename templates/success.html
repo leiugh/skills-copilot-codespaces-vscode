@@ -1,0 +1,37 @@
+<!-- success.html — Confirmation page shown after a report is submitted -->
+<!-- Extends the shared base template for consistent header/footer -->
+{% extends "base.html" %}
+
+{% block title %}Report Submitted{% endblock %}
+
+{% block content %}
+    <div class="page-container">
+
+        <!-- Success confirmation card — centered with check icon -->
+        <div class="success-card">
+            <!-- Green checkmark icon -->
+            <div class="checkmark">✅</div>
+
+            <h2>Report Submitted Successfully!</h2>
+
+            <!-- Display the reporter's name passed from the Flask route -->
+            <p><strong>Name:</strong> {{ name }}</p>
+            <!-- Display the selected severity level passed from the Flask route -->
+            <p><strong>Severity:</strong> {{ severity }}</p>
+
+            <!-- Display the report reference ID if passed from the Flask route -->
+            {% if report_id %}
+            <p><strong>Reference No.:</strong> MCCRRS-{{ report_id }}</p>
+            {% endif %}
+
+            <!-- Navigation buttons — go home or submit another report -->
+            <div class="btn-group">
+                <!-- Link back to the home page using url_for -->
+                <a href="{{ url_for('home') }}" class="btn-secondary">Back to Home</a>
+                <!-- Link to submit another report -->
+                <a href="{{ url_for('resident') }}" class="btn-primary">Submit Another</a>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

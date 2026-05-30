@@ -1,0 +1,114 @@
+<!-- admin_announcements.html — Announcements bulletin workspace and bulletins manager -->
+{% extends "admin_base.html" %}
+
+{% block title %}Announcements Workspace{% endblock %}
+
+{% block admin_content %}
+    
+    <!-- Page Headings -->
+    <h2 class="admin-page-title">Announcements</h2>
+    <p class="admin-page-subtitle">Publish city alerts, schedule health caravans, and disseminate community service notices.</p>
+
+    <!-- Top Banner: Notice warning headers -->
+    <div class="announcements-notice-banner" style="text-align:left; background-color:#E0E0E0; border:1px solid #C0C0C0; border-radius:6px; margin-bottom:24px;">
+        <strong style="font-size:1.05rem; color:#000; display:block; margin-bottom:4px;">Community updates, notices, emergency alerts, and public service information.</strong>
+        <span style="font-size:0.85rem; color:#444; font-weight:600;">Updates published here immediately propagate to the resident-facing Announcements feed.</span>
+    </div>
+
+    <!-- Announcements Control Action Ribbon -->
+    <div class="admin-search-wrapper" style="align-items:center; margin-bottom:24px;">
+        
+        <!-- Search bulletins filter box -->
+        <form method="GET" action="{{ url_for('admin_announcements') }}" style="flex-grow:1; display:flex; gap:10px;">
+            <input type="text" name="search" class="admin-search-input" placeholder="Search announcements..." value="{{ search_query or '' }}">
+            <button type="submit" class="btn-admin-search">Search</button>
+            {% if search_query %}
+                <a href="{{ url_for('admin_announcements') }}" class="btn-primary" style="padding:10px 20px; font-size:0.85rem; border-radius:20px; text-decoration:none; background-color:#666; display:inline-block;">Reset</a>
+            {% endif %}
+        </form>
+
+        <!-- Toggle Post Form trigger -->
+        <button onclick="toggleAnnouncementForm()" class="btn-ann-post" id="btn-post-toggle">
+            + Post Announcement
+        </button>
+
+    </div>
+
+    <!-- Collapsible Posting Input Drawer Card (Pure JS Toggles) -->
+    <div class="announcement-form-box" id="ann-post-drawer" style="display:none;">
+        <h3 class="announcement-form-title">Publish New Announcement</h3>
+        
+        <form method="POST" action="{{ url_for('admin_announcements') }}">
+            <!-- Title -->
+            <div class="form-group" style="margin-bottom:16px;">
+                <label for="title" style="font-weight:700; font-size:0.85rem; color:#000; display:block; margin-bottom:6px;">Announcement Title <span class="required">*</span></label>
+                <input type="text" id="title" name="title" placeholder="e.g. Scheduled Power Outage, Health Caravan..." required
+                       style="width:100%; padding:10px 14px; border:1px solid #A0A0A0; border-radius:4px; font-family:inherit; box-sizing:border-box;">
+            </div>
+
+            <!-- Content Description -->
+            <div class="form-group" style="margin-bottom:20px;">
+                <label for="content" style="font-weight:700; font-size:0.85rem; color:#000; display:block; margin-bottom:6px;">Message Content <span class="required">*</span></label>
+                <textarea id="content" name="content" rows="5" placeholder="Type details here..." required
+                          style="width:100%; padding:12px; border:1px solid #A0A0A0; border-radius:4px; font-family:inherit; resize:vertical; box-sizing:border-box;"></textarea>
+            </div>
+
+            <!-- Form Buttons alignment -->
+            <div style="display:flex; gap:10px; justify-content:flex-end;">
+                <button type="button" onclick="toggleAnnouncementForm()" class="btn-sidebar-logout" style="width:auto; padding:10px 20px;">Cancel</button>
+                <button type="submit" class="btn-ann-post">Post Bulletin</button>
+            </div>
+        </form>
+
+    </div>
+
+    <!-- Dynamic Card Feeds section -->
+    <section class="form-card" style="padding: 24px; display:flex; flex-direction:column; gap:20px;">
+        
+        {% if announcements %}
+            {% for ann in announcements %}
+            <!-- Indiv Card Container -->
+            <div class="feedback-card-item" style="background-color:#F5F5F5; display:flex; gap:20px; align-items:flex-start; width:100%; border:1px solid #D0D0D0;">
+                
+                <!-- Left Details Content Block -->
+                <div style="flex-grow:1;">
+                    <h4 style="font-size:1.15rem; font-weight:800; color:#000; margin:0 0 4px 0;">{{ ann.title }}</h4>
+                    <span style="font-size:0.75rem; color:#666; font-weight:700; display:block; margin-bottom:12px;">Published on: {{ ann.date_posted }}</span>
+                    <p style="font-size:0.9rem; color:#222; font-weight:600; line-height:1.5; margin:0;">
+                        {{ ann.content }}
+                    </p>
+                </div>
+
+                <!-- Right Monochromatic Image Placeholder box matching wireframe spec -->
+                <div style="width:160px; height:100px; background-color:#C8C8C8; border:1px dashed #A0A0A0; border-radius:4px; display:flex; justify-content:center; align-items:center; flex-shrink:0;">
+                    <span style="font-size:0.75rem; font-weight:800; color:#444; text-transform:uppercase; letter-spacing:0.5px;">Image Placeholder</span>
+                </div>
+
+            </div>
+            {% endfor %}
+        {% else %}
+            <div style="text-align:center; padding:40px 0; color:#777; font-weight:700;">
+                No announcements bulletins have been published yet.
+            </div>
+        {% endif %}
+
+    </section>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Collapses/reveals announcement publisher drawer
+    function toggleAnnouncementForm() {
+        var drawer = document.getElementById('ann-post-drawer');
+        var btn = document.getElementById('btn-post-toggle');
+        if (drawer.style.display === 'none') {
+            drawer.style.display = 'block';
+            btn.innerText = 'Close Form';
+        } else {
+            drawer.style.display = 'none';
+            btn.innerText = '+ Post Announcement';
+        }
+    }
+</script>
+{% endblock %}

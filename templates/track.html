@@ -1,0 +1,135 @@
+{# track.html — Resident concern tracking screen for MCCRRS #}
+{# Extends base.html layout template for consistent header/footer #}
+{% extends "base.html" %}
+
+{% block title %}Track{% endblock %}
+
+{% block content %}
+    <div class="page-container">
+
+        {# Added: Search bar form enabling users to query other reports by ID #}
+        <form method="GET" action="{{ url_for('track') }}" style="margin-bottom: 30px; display: flex; gap: 12px; max-width: 460px; margin-left: auto; margin-right: auto; background: #fff; padding: 10px; border-radius: 30px; border: 1px solid #ccc; box-shadow: 0 2px 6px rgba(0,0,0,0.04);">
+            {# Input field styled like a rounded capsule #}
+            <input type="text" name="id" placeholder="Enter Report ID to track (e.g. 1)" style="flex: 1; border: none; outline: none; padding-left: 15px; font-size: 0.9rem; font-family: inherit;">
+            {# Search action button #}
+            <button type="submit" class="btn-primary" style="border-radius: 20px; padding: 8px 20px; font-size: 0.85rem; border: none; cursor: pointer; background: #000; color: #fff;">Search</button>
+        </form>
+
+        {# Check if report data exists to display details #}
+        {% if report %}
+
+            {# Added: Header section containing resident details (left) and the horizontal timeline status progress bar (right) #}
+            <div class="track-header-section">
+                
+                {# Left side metadata #}
+                <div class="track-greeting">
+                    {# Dynamic user greeting #}
+                    <h2>Hi, {{ report.name }}!</h2>
+                    
+                    {# Report descriptors #}
+                    <div class="track-metadata">
+                        <div><strong>Report ID:</strong> MCCRRS-{{ report.id }}</div>
+                        <div><strong>Current Status:</strong> {{ report.status }}</div>
+                        <div><strong>Submitted:</strong> {{ report.date_reported }}</div>
+                        <div><strong>Last Update:</strong> {{ report.date_reported }}</div>
+                    </div>
+                </div>
+
+                {# Right side horizontal progress timeline #}
+                <div class="progress-container">
+                    {# Dynamic timeline stage headers #}
+                    <div class="progress-labels">
+                        <span style="font-weight: {{ '800' if report.status in ['Submitted', 'Pending'] else 'normal' }}; text-decoration: {{ 'underline' if report.status in ['Submitted', 'Pending'] else 'none' }};">Submitted</span>
+                        <span style="font-weight: {{ '800' if report.status == 'Reviewed' else 'normal' }}; text-decoration: {{ 'underline' if report.status == 'Reviewed' else 'none' }};">Reviewed</span>
+                        <span style="font-weight: {{ '800' if report.status == 'Assigned' else 'normal' }}; text-decoration: {{ 'underline' if report.status == 'Assigned' else 'none' }};">Assigned</span>
+                        <span style="font-weight: {{ '800' if report.status == 'In Progress' else 'normal' }}; text-decoration: {{ 'underline' if report.status == 'In Progress' else 'none' }};">In Progress</span>
+                        <span style="font-weight: {{ '800' if report.status == 'Resolved' else 'normal' }}; text-decoration: {{ 'underline' if report.status == 'Resolved' else 'none' }};">Resolved</span>
+                    </div>
+
+                    {# Progress timeline base track #}
+                    <div class="progress-track-base">
+                        {# Dynamic gray colored progress bar fill mapping to state percentage #}
+                        <div class="progress-track-fill" style="width: {{ progress_percentage }}%;"></div>
+                    </div>
+                </div>
+
+            </div>
+
+            {# Added: Double column section split between Report Summary (left) and Officer Updates (right) #}
+            <div class="track-columns">
+
+                {# Left Column - Report Summary #}
+                <div>
+                    <h2 class="page-title" style="text-align: center; margin-bottom: 20px;">Report Summary</h2>
+
+                    {# Card Box 1 — Concern descriptors #}
+                    <div class="summary-card">
+                        <h3>Concern Details</h3>
+                        <div><strong>Priority Category:</strong> {{ report.severity }}</div>
+                        <div><strong>Location:</strong> {{ report.location }}</div>
+                        <div><strong>Concern:</strong> {{ report.concern }}</div>
+                        <div style="margin-top: 8px;"><strong>Description of Issue:</strong></div>
+                        <p style="background: rgba(255,255,255,0.7); padding: 8px 12px; border-radius: 4px; border: 1px solid #ddd; margin-top: 4px;">
+                            {{ report.description or 'No additional description provided.' }}
+                        </p>
+                    </div>
+
+                    {# Card Box 2 — Assignment details #}
+                    <div class="summary-card">
+                        <h3>Assignment Info</h3>
+                        {# Added: Dynamically displays assigned department/officer using Jinja mapping to the model field #}
+                        <div><strong>Assigned to:</strong> {{ report.officer_assignment }}</div>
+                        <div><strong>Site Inspection Schedule:</strong> {% if report.status in ['Assigned', 'In Progress', 'Resolved'] %}Completed{% else %}TBD{% endif %}</div>
+                    </div>
+
+                    {# Card Box 3 — Target estimates #}
+                    <div class="summary-card">
+                        <h3>Resolution Target</h3>
+                        <div><strong>Estimated Resolution:</strong> {% if report.status == 'Resolved' %}Resolved{% elif report.status in ['Assigned', 'In Progress'] %}Active Work Stage{% else %}Pending Inspection{% endif %}</div>
+                        <div><strong>Target Date:</strong> {% if report.status in ['Assigned', 'In Progress', 'Resolved'] %}June 5, 2026{% else %}TBD{% endif %}</div>
+                    </div>
+                </div>
+
+                {# Right Column - Officer Updates #}
+                <div style="border-left: 2px solid #ccc; padding-left: 40px;">
+                    <h2 class="page-title" style="text-align: center; margin-bottom: 20px;">Officer Updates:</h2>
+
+                    {# Photo section showing dynamic database image or wireframe 'PHOTO' placeholder #}
+                    {% if report.image %}
+                        {# Renders original database photo upload #}
+                        <div class="photo-placeholder">
+                            <img src="{{ url_for('report_image', report_id=report.id) }}" alt="Officer Update Photo">
+                        </div>
+                    {% else %}
+                        {# Renders monochromatic wireframe PHOTO box #}
+                        <div class="photo-placeholder">
+                            PHOTO
+                        </div>
+                    {% endif %}
+
+                    {# Officer updates comments #}
+                    <div style="font-size: 0.95rem; color: #222; line-height: 1.7; background: #fff; padding: 20px; border-radius: 6px; border: 1px solid #e0e0e0; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
+                        <strong style="display: block; margin-bottom: 6px; color: #000; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.5px;">Officer Progress Notes:</strong>
+                        <p style="color: #333;">
+                            {# Added: Dynamically binds the progress text description entered by the official in the admin module #}
+                            {{ report.officer_notes or 'Initial complaint received. Administrative inspections scheduled shortly.' }}
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+        {% else %}
+
+            {# Added: Fallback display when no concerns exist in the database #}
+            <div class="success-card" style="margin-top: 40px;">
+                <div style="font-size: 3rem; margin-bottom: 15px;">🔍</div>
+                <h2>No Reports Available for Tracking</h2>
+                <p style="color: #666; margin-bottom: 20px;">No concern reports have been submitted to the database yet. Submit a new report to view progress tracking.</p>
+                <a href="{{ url_for('report') }}" class="btn-primary" style="display: inline-block;">File a Report</a>
+            </div>
+
+        {% endif %}
+
+    </div>
+{% endblock %}

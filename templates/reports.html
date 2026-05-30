@@ -1,0 +1,101 @@
+<!-- reports.html — Reports dashboard showing all submitted reports -->
+<!-- Extends the shared base template for consistent header/footer -->
+{% extends "base.html" %}
+
+{% block title %}Reports Dashboard{% endblock %}
+
+{% block content %}
+    <div class="page-container">
+
+        <!-- Page heading -->
+        <h2 class="page-title">Submitted Reports</h2>
+        <p class="page-subtitle">View all community concern reports submitted to the City of Manila.</p>
+
+        <!-- Check if any reports exist before rendering the table -->
+        {% if reports %}
+
+        <!-- Reports data table — columns match ReportSystem attributes -->
+        <table class="reports-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Location</th>
+                    <th>Concern</th>
+                    <th>Severity</th>
+                    <th>Status</th>
+                    <th>Image</th>
+                    <!-- Show status update column only when admin is logged in -->
+                    {% if session.get('admin_logged_in') %}
+                    <th>Update</th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Loop through each report object passed from Flask route -->
+                {% for report in reports %}
+                <tr>
+                    <!-- Report ID from SQLAlchemy auto-increment -->
+                    <td>MCCRRS-{{ report.id }}</td>
+                    <!-- Reporter's name -->
+                    <td>{{ report.name }}</td>
+                    <!-- Location of the concern -->
+                    <td>{{ report.location }}</td>
+                    <!-- Concern category/description -->
+                    <td>{{ report.concern }}</td>
+                    <!-- Severity level -->
+                    <td>{{ report.severity }}</td>
+                    <!-- Status badge — CSS class derived from status value for color coding -->
+                    <td>
+                        <span class="badge badge-{{ report.status|lower|replace(' ', '-') }}">
+                            {{ report.status }}
+                        </span>
+                    </td>
+                    <!-- Report image thumbnail — shows if image data exists -->
+                    <td>
+                        {% if report.image %}
+                        <!-- Image served from the /report_image/<id> route -->
+                        <img src="{{ url_for('report_image', report_id=report.id) }}" alt="Report Image" class="report-thumb">
+                        {% else %}
+                        <span style="color:#aaa;">—</span>
+                        {% endif %}
+                    </td>
+                    <!-- Admin status update form — only visible when admin is logged in -->
+                    {% if session.get('admin_logged_in') %}
+                    <td>
+                        <!-- Inline form to update report status via POST -->
+                        <form method="POST" action="{{ url_for('update_report_status', report_id=report.id) }}" class="status-form">
+                            <select name="new_status">
+                                <!-- Status options matching ReportStatus constants -->
+                                <option value="Pending" {{ 'selected' if report.status == 'Pending' else '' }}>Pending</option>
+                                <option value="Submitted" {{ 'selected' if report.status == 'Submitted' else '' }}>Submitted</option>
+                                <option value="Reviewed" {{ 'selected' if report.status == 'Reviewed' else '' }}>Reviewed</option>
+                                <option value="Assigned" {{ 'selected' if report.status == 'Assigned' else '' }}>Assigned</option>
+                                <option value="In Progress" {{ 'selected' if report.status == 'In Progress' else '' }}>In Progress</option>
+                                <option value="Resolved" {{ 'selected' if report.status == 'Resolved' else '' }}>Resolved</option>
+                                <option value="Rejected" {{ 'selected' if report.status == 'Rejected' else '' }}>Rejected</option>
+                            </select>
+                            <!-- Submit button for the inline status update -->
+                            <button type="submit">Update</button>
+                        </form>
+                    </td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        {% else %}
+
+        <!-- Empty state shown when no reports exist in the database -->
+        <div class="empty-state">
+            <h3>No Reports Yet</h3>
+            <p>Community concern reports will appear here once submitted.</p>
+            <!-- Link to the resident report form -->
+            <a href="{{ url_for('resident') }}" class="btn-primary" style="margin-top:20px; display:inline-block;">File a Report</a>
+        </div>
+
+        {% endif %}
+
+    </div>
+{% endblock %}

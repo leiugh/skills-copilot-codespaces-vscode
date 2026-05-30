@@ -1,0 +1,106 @@
+{# announcements.html — Announcements and Alerts screen for MCCRRS #}
+{# Extends base.html layout template for consistent header/footer #}
+{% extends "base.html" %}
+
+{% block title %}Announcements{% endblock %}
+
+{% block content %}
+    <div class="page-container" style="max-width: 800px;">
+
+        {# Added: Title heading matching wireframe style #}
+        <h2 class="page-title" style="font-size: 2.2rem; font-weight: 800; margin-bottom: 24px;">Announcements</h2>
+
+        {# Added: Notice banner styled with light gray background #}
+        <div class="announcements-notice-banner">
+            Stay updated with important community notices, advisories, and emergency alerts.
+        </div>
+
+        {# Added: Accordions list housing notices #}
+        <div style="margin-top: 30px;">
+
+            {# Added: Accordion item 1 — Urgent Alerts (Expanded by default) #}
+            <div class="accordion-item">
+                {# Header section containing stack menu icon #}
+                <div class="accordion-header" id="header-urgent">
+                    <span class="accordion-icon"></span>
+                    <span>Urgent Alerts</span>
+                </div>
+                {# Expanded body containing the details #}
+                <div class="accordion-content" id="content-urgent">
+                    <strong style="color: #000; display: block; margin-bottom: 8px;">🚨 WEATHER WARNING: TYPHOON PREPAREDNESS ADVISORY</strong>
+                    <p style="text-align: justify; margin-bottom: 12px;">
+                        Typhoon Warning: Signal No. 2 has been officially declared for Metro Manila due to an approaching tropical depression. 
+                        Expect heavy continuous downpours, strong gusty winds, and localized flooding in low-lying areas near the riverbanks.
+                    </p>
+                    <p style="text-align: justify;">
+                        All residents are strictly advised to remain indoors, secure loose outdoor objects, keep emergency kits (food, flashlights, radios) 
+                        fully charged and accessible, and closely monitor official alerts.
+                    </p>
+                </div>
+            </div>
+
+            {# Added: Accordion item 2 — Official City Announcements (Collapsed by default) #}
+            <div class="accordion-item">
+                {# Header section #}
+                <div class="accordion-header" id="header-official">
+                    <span class="accordion-icon"></span>
+                    <span>Official City Announcements</span>
+                </div>
+                {# Collapsed body #}
+                <div class="accordion-content collapsed" id="content-official">
+                    <strong style="color: #000; display: block; margin-bottom: 8px;">🏥 CITY HEALTH Caravan: STA. ANA DISTRICT</strong>
+                    <p style="text-align: justify; margin-bottom: 12px;">
+                        The City Government of Manila will be launching a comprehensive Mobile Public Health Caravan this coming Saturday, June 6th, 2026, 
+                        at the Sta. Ana Health Center grounds from 8:00 AM to 4:00 PM.
+                    </p>
+                    <p style="text-align: justify;">
+                        Offered services include free pediatric check-ups, dental extraction, routine diagnostic screenings, basic medical prescriptions, 
+                        and public single-dose vaccines. Special express lanes will be available for senior citizens, pregnant women, and infants.
+                    </p>
+                </div>
+            </div>
+
+            {# Added: Accordion item 3 — Service Advisories (Collapsed by default) #}
+            <div class="accordion-item">
+                {# Header section #}
+                <div class="accordion-header" id="header-service">
+                    <span class="accordion-icon"></span>
+                    <span>Service Advisories</span>
+                </div>
+                {# Collapsed body #}
+                <div class="accordion-content collapsed" id="content-service">
+                    <strong style="color: #000; display: block; margin-bottom: 8px;">💧 URGENT WATER SERVICE INTERRUPTION ADVISORY</strong>
+                    <p style="text-align: justify; margin-bottom: 12px;">
+                        Maynilad Water Services has announced emergency leak repair operations on main high-pressure aqueduct pipes. 
+                        Water supply interruption will take place across Sta. Mesa, Sampaloc, and parts of San Miguel.
+                    </p>
+                    <p style="text-align: justify;">
+                        The outage will begin on Wednesday, June 3rd, 2026, from 10:00 PM until Thursday, June 4th, 2026, at 6:00 AM. 
+                        All affected community members are urged to store clean water supplies before the maintenance window.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    {# Added: JavaScript block to control accordion expand/collapse click transitions #}
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Retrieve all header bars
+            var headers = document.querySelectorAll(".accordion-header");
+            
+            headers.forEach(function(header) {
+                // Attach click listener for toggling visibility
+                header.addEventListener("click", function() {
+                    var content = header.nextElementSibling;
+                    if (content) {
+                        // Toggle collapsed state styling
+                        content.classList.toggle("collapsed");
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}

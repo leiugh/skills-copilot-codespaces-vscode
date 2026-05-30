@@ -1,0 +1,89 @@
+<!-- admin_reports.html — Tabular reports dashboard with live text filtering and clearance mapping -->
+{% extends "admin_base.html" %}
+
+{% block title %}Reports Management{% endblock %}
+
+{% block admin_content %}
+    
+    <!-- Page Headings -->
+    <h2 class="admin-page-title">Reports Management</h2>
+    <p class="admin-page-subtitle">View and filter submitted citizen concerns. Action update forms redirect to the officials workbench.</p>
+
+    <!-- Search Input Area -->
+    <form method="GET" action="{{ url_for('admin_reports') }}" class="admin-search-wrapper">
+        <!-- Pill-styled text filter input -->
+        <input type="text" name="search" class="admin-search-input" 
+               placeholder="Search by Reference ID, Resident Name, Concern Category, Location or Status..." 
+               value="{{ search_query or '' }}">
+        <button type="submit" class="btn-admin-search">Search</button>
+        {% if search_query %}
+            <a href="{{ url_for('admin_reports') }}" class="btn-primary" style="padding:10px 20px; font-size:0.85rem; border-radius:20px; text-decoration:none; background-color:#666; display:inline-block;">Reset</a>
+        {% endif %}
+    </form>
+
+    <!-- Clearanced Data Table Grid -->
+    <div class="form-card" style="padding: 24px;">
+        
+        {% if reports %}
+        <table class="reports-table" style="width:100%; margin-top:0;">
+            <thead>
+                <tr>
+                    <th style="font-weight:800;">Ref. No</th>
+                    <th style="font-weight:800;">Resident</th>
+                    <th style="font-weight:800;">Concern</th>
+                    <th style="font-weight:800;">Location</th>
+                    <th style="font-weight:800;">Date</th>
+                    <th style="font-weight:800;">Status</th>
+                    <th style="font-weight:800; text-align:center;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Iterate reports -->
+                {% for report in reports %}
+                <tr>
+                    <!-- Reference Number ID -->
+                    <td>MCCRRS-{{ report.id }}</td>
+                    
+                    <!-- Resident name -->
+                    <td>{{ report.name }}</td>
+                    
+                    <!-- Concern description details -->
+                    <td>
+                        <span style="font-weight:700; display:block;">{{ report.concern }}</span>
+                        <span style="font-size:0.75rem; color:#666;">Priority: {{ report.severity }}</span>
+                    </td>
+                    
+                    <!-- Incident location details -->
+                    <td>{{ report.location }}</td>
+                    
+                    <!-- Date submitted -->
+                    <td>{{ report.date_reported }}</td>
+                    
+                    <!-- Status badge indicators styled color coded -->
+                    <td>
+                        <span class="badge badge-{{ report.status|lower|replace(' ', '-') }}" style="font-weight:700;">
+                            {{ report.status }}
+                        </span>
+                    </td>
+                    
+                    <!-- Edit route "Update" pointing to selected Officials form card -->
+                    <td style="text-align:center;">
+                        <a href="{{ url_for('admin_officials', id=report.id) }}" class="btn-primary" 
+                           style="padding:6px 14px; font-size:0.8rem; border-radius:12px; text-decoration:none; display:inline-block; background-color:#000;">
+                            Update
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <!-- No matching records found -->
+        <div style="text-align:center; padding:40px 0; color:#555; font-weight:700;">
+            No reports match your active query criteria.
+        </div>
+        {% endif %}
+
+    </div>
+
+{% endblock %}

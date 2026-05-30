@@ -1,0 +1,158 @@
+<!-- admin_officials.html — Officials Management dual-pane interface supporting queue processing and logs modifications -->
+{% extends "admin_base.html" %}
+
+{% block title %}Officials Management{% endblock %}
+
+{% block admin_content %}
+    
+    <!-- Page Headings -->
+    <h2 class="admin-page-title">Officials Management</h2>
+    <p class="admin-page-subtitle">Manage department assignments, submit progress updates, upload photos, and transition concern status.</p>
+
+    <!-- Unified Dual-Pane Layout -->
+    <div class="admin-officials-pane-layout">
+
+        <!-- Left Column: Queue filter and reports selector scroll container -->
+        <div class="officials-queue-pane">
+            
+            <h3 style="font-size:1rem; font-weight:800; color:#000; margin:0 0 16px 0; border-bottom:1.5px solid #C0C0C0; padding-bottom:8px;">
+                Active Queues
+            </h3>
+
+            <!-- Queue Search Filter -->
+            <form method="GET" action="{{ url_for('admin_officials') }}" style="margin-bottom:16px; display:flex; gap:6px;">
+                <input type="text" name="search" placeholder="Search queues..." value="{{ search_query or '' }}"
+                       style="flex-grow:1; padding:8px 12px; font-size:0.8rem; border:1px solid #A0A0A0; border-radius:16px;">
+                <button type="submit" class="btn-admin-search" style="padding:6px 12px; font-size:0.75rem;">Go</button>
+            </form>
+
+            <div class="queue-items-container">
+                {% if reports %}
+                    {% for q_rep in reports %}
+                    <!-- Queue Card Button pointing back with selected ID query -->
+                    <a href="{{ url_for('admin_officials', id=q_rep.id, search=search_query) }}" 
+                       class="queue-card-btn {{ 'selected' if selected_report and selected_report.id == q_rep.id else '' }}">
+                        <div class="queue-card-ref">MCCRRS-{{ q_rep.id }}</div>
+                        <div class="queue-card-concern">{{ q_rep.concern }}</div>
+                        <div class="queue-card-reporter">Resident: {{ q_rep.name }}</div>
+                    </a>
+                    {% endfor %}
+                {% else %}
+                    <div style="text-align:center; padding:30px 0; color:#777; font-size:0.8rem; font-weight:700;">
+                        No active queue elements found.
+                    </div>
+                {% endif %}
+            </div>
+
+        </div>
+
+        <!-- Right Column: Detail Modifier form panel for selected report -->
+        <div class="officials-details-pane">
+            
+            {% if selected_report %}
+            
+                <h3 style="font-size:1.2rem; font-weight:800; color:#000; margin:0 0 16px 0; border-bottom:2px solid #C0C0C0; padding-bottom:12px;">
+                    Report Details: MCCRRS-{{ selected_report.id }}
+                </h3>
+
+                <!-- Metadata block display -->
+                <div class="details-meta-block">
+                    <div class="details-meta-item"><strong>Report ID:</strong> MCCRRS-{{ selected_report.id }}</div>
+                    <div class="details-meta-item"><strong>Resident Name:</strong> {{ selected_report.name }}</div>
+                    <div class="details-meta-item"><strong>Concern Type:</strong> {{ selected_report.concern }}</div>
+                    <div class="details-meta-item"><strong>Priority Level:</strong> 
+                        <span class="badge badge-{{ selected_report.severity|lower|replace(' ', '-') }}" style="font-size:0.75rem; font-weight:700; padding:2px 8px;">
+                            {{ selected_report.severity }}
+                        </span>
+                    </div>
+                    <div class="details-meta-item"><strong>Incident Location:</strong> {{ selected_report.location }}</div>
+                    <div class="details-meta-item"><strong>Date Submitted:</strong> {{ selected_report.date_reported }}</div>
+                    {% if selected_report.description %}
+                    <div class="details-meta-item" style="margin-top:12px; padding-top:12px; border-top:1px dashed #DDD;">
+                        <strong>Description of Issue:</strong><br>
+                        <span style="font-style:italic; display:block; margin-top:4px; line-height:1.5; color:#444;">"{{ selected_report.description }}"</span>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- Existing progress photo display -->
+                {% if selected_report.image %}
+                <div style="margin-bottom:24px;">
+                    <strong style="font-size:0.85rem; color:#000; display:block; margin-bottom:8px;">Current Progress Photo:</strong>
+                    <!-- Serves dynamic image blob -->
+                    <img src="{{ url_for('report_image', report_id=selected_report.id) }}" alt="Progress Photo" 
+                         style="max-width:100%; height:200px; object-fit:cover; border:1px solid #CCC; border-radius:4px;">
+                </div>
+                {% endif %}
+
+                <!-- Form updating reports parameters -->
+                <form method="POST" action="{{ url_for('admin_update_report', report_id=selected_report.id) }}" enctype="multipart/form-data">
+                    
+                    <!-- Form 1: Assign to Department dropdown selection -->
+                    <div class="form-group" style="margin-bottom:20px;">
+                        <label for="department" style="font-weight:700; font-size:0.85rem; color:#000; display:block; margin-bottom:8px;">
+                            Assign to Department:
+                        </label>
+                        <select id="department" name="department" style="width:100%; padding:10px 16px; border:1px solid #A0A0A0; border-radius:4px; font-family:inherit;">
+                            <option value="" {% if not selected_report.department %}selected{% endif %}>-- Select Department --</option>
+                            <option value="Department of Public Works" {% if selected_report.department == "Department of Public Works" %}selected{% endif %}>Department of Public Works</option>
+                            <option value="Manila Health Department" {% if selected_report.department == "Manila Health Department" %}selected{% endif %}>Manila Health Department</option>
+                            <option value="Bureau of Fire Protection" {% if selected_report.department == "Bureau of Fire Protection" %}selected{% endif %}>Bureau of Fire Protection</option>
+                            <option value="Manila Police District" {% if selected_report.department == "Manila Police District" %}selected{% endif %}>Manila Police District</option>
+                            <option value="Manila Traffic and Parking Bureau" {% if selected_report.department == "Manila Traffic and Parking Bureau" %}selected{% endif %}>Manila Traffic and Parking Bureau</option>
+                            <option value="Barangay Operations Center" {% if selected_report.department == "Barangay Operations Center" %}selected{% endif %}>Barangay Operations Center</option>
+                        </select>
+                    </div>
+
+                    <!-- Form 2: Progress updates text input area -->
+                    <div class="form-group" style="margin-bottom:20px;">
+                        <label for="officer_notes" style="font-weight:700; font-size:0.85rem; color:#000; display:block; margin-bottom:8px;">
+                            Progress Update:
+                        </label>
+                        <textarea id="officer_notes" name="officer_notes" rows="4" placeholder="Enter progress log notes, e.g. Drainage clearing ongoing, crews dispatched..." 
+                                  style="width:100%; padding:12px; border:1px solid #A0A0A0; border-radius:4px; font-family:inherit; resize:vertical; box-sizing:border-box;">{{ selected_report.officer_notes or '' }}</textarea>
+                    </div>
+
+                    <!-- Form 3: Upload progress photo file inputs -->
+                    <div class="form-group" style="margin-bottom:20px;">
+                        <label for="image" style="font-weight:700; font-size:0.85rem; color:#000; display:block; margin-bottom:8px;">
+                            [ Upload Photo ]:
+                        </label>
+                        <input type="file" id="image" name="image" accept="image/*" 
+                               style="font-size:0.85rem; font-family:inherit;">
+                        <span style="font-size:0.75rem; color:#777; display:block; margin-top:4px; font-weight:600;">(Replaces the previous image if a new one is selected)</span>
+                    </div>
+
+                    <!-- Form 4: Change Status dropdown selection -->
+                    <div class="form-group" style="margin-bottom:30px;">
+                        <label for="status" style="font-weight:700; font-size:0.85rem; color:#000; display:block; margin-bottom:8px;">
+                            Status:
+                        </label>
+                        <select id="status" name="status" style="width:100%; padding:10px 16px; border:1px solid #A0A0A0; border-radius:4px; font-family:inherit; font-weight:700;">
+                            <option value="Submitted" {% if selected_report.status == "Submitted" %}selected{% endif %}>Submitted</option>
+                            <option value="Reviewed" {% if selected_report.status == "Reviewed" %}selected{% endif %}>Reviewed</option>
+                            <option value="Assigned" {% if selected_report.status == "Assigned" %}selected{% endif %}>Assigned</option>
+                            <option value="In Progress" {% if selected_report.status == "In Progress" %}selected{% endif %}>In Progress</option>
+                            <option value="Resolved" {% if selected_report.status == "Resolved" %}selected{% endif %}>Resolved</option>
+                            <option value="Rejected" {% if selected_report.status == "Rejected" %}selected{% endif %}>Rejected</option>
+                        </select>
+                    </div>
+
+                    <!-- Submit updates button -->
+                    <button type="submit" class="btn-submit" style="width:100%; padding:12px; border-radius:4px; font-weight:800; background-color:#000; color:#FFF; border:none; cursor:pointer;">
+                        Submit Update
+                    </button>
+
+                </form>
+
+            {% else %}
+                <div style="text-align:center; padding:80px 0; color:#555; font-size:1rem; font-weight:700;">
+                    No report selected. Choose an active item from the queue list on the left to modify.
+                </div>
+            {% endif %}
+
+        </div>
+
+    </div>
+
+{% endblock %}
